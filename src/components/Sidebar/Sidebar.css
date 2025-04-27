@@ -1,0 +1,98 @@
+.sidebar {
+  width: 280px;
+  height: 100vh;
+  background-color: white;
+  box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: -280px;
+  transition: left 0.3s ease;
+}
+
+.sidebar.open {
+  left: 0;
+}
+
+.sidebar-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.sidebar-header h2 {
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.sidebar-nav {
+  flex: 1;
+  padding: 1rem 0;
+}
+
+.sidebar-nav ul {
+  list-style: none;
+}
+
+.sidebar-nav li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.sidebar-nav li span {
+  flex: 1;
+}
+
+.note-count {
+  background-color: #e5e7eb;
+  color: #666;
+  padding: 0.25rem 0.5rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  min-width: 1.5rem;
+  text-align: center;
+}
+
+.sidebar-nav li.active .note-count {
+  background-color: #8E54E9;
+  color: white;
+}
+
+.sidebar-nav li:hover {
+  background-color: #f5f5f5;
+}
+
+.sidebar-nav li.active {
+  background-color: #f0e7fe;
+  color: #8E54E9;
+}
+
+.sidebar-footer {
+  padding: 1.5rem;
+  border-top: 1px solid #eee;
+}
+
+.logout-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: none;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.logout-btn:hover {
+  background-color: #f5f5f5;
+  border-color: #ccc;
+}

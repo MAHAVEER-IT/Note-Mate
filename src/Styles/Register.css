@@ -1,0 +1,77 @@
+.notes-app-container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  background: linear-gradient(135deg, #4776E6 0%, #8E54E9 50%, #FF477E 100%);
+}
+
+.notes-app-form-panel {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+.notes-app-form-container {
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  padding: 2rem;
+  width: 100%;
+  max-width: 28rem;
+  box-sizing: border-box;
+}
+
+.notes-app-input-group {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.notes-app-input {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 2.5rem;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+.notes-app-features {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.notes-app-feature-icon {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+.notes-app-feature-image {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+
+
+@media (min-width: 768px) {
+  .notes-app-image-panel {
+    display: block;
+  }
+  
+  .notes-app-form-panel {
+    width: 50%;
+  }
+}

@@ -1,0 +1,24 @@
+.home-page {
+  min-height: 100vh;
+  background-color: #f9f9f9;
+}
+
+.main-content {
+  padding: 2rem;
+  margin-left: 0;
+  transition: margin-left 0.3s ease;
+}
+
+.main-content.shifted {
+  margin-left: 280px;
+}
+
+.main-content h1 {
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.main-content p {
+  color: #666;
+  font-size: 1.1rem;
+}
