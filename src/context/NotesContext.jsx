@@ -1,12 +1,14 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import noteService from '../services/notesService'; 
+import noteService from '../services/notesService';
+import {getCurrentUser} from '../services/authService';
 const NotesContext = createContext();
 
 export function NotesProvider({ children }) {
   const [notes, setNotes] = useState([]);
   const [archivedNotes, setArchivedNotes] = useState([]);
   
-  const token = localStorage.getItem('token'); 
+  const token = getCurrentUser()?.token; 
+
   const fetchNotes = async () => {
     try {
       const allNotes = await noteService.getNotes(token);

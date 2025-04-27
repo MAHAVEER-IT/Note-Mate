@@ -1,6 +1,6 @@
 const Note = require('../models/Note');
 
-// Get all notes for a user
+
 const getNotes = async (req, res) => {
     try {
         const notes = await Note.find({ user: req.user._id });
@@ -10,7 +10,7 @@ const getNotes = async (req, res) => {
     }
 };
 
-// Create a new note
+
 const createNote = async (req, res) => {
     try {
         const { title, content, color } = req.body;
@@ -28,7 +28,7 @@ const createNote = async (req, res) => {
     }
 };
 
-// Update a note
+
 const updateNote = async (req, res) => {
     try {
         const note = await Note.findById(req.params.id);
@@ -53,7 +53,7 @@ const updateNote = async (req, res) => {
     }
 };
 
-// Delete a note
+
 const deleteNote = async (req, res) => {
     try {
         const note = await Note.findById(req.params.id);
@@ -73,7 +73,7 @@ const deleteNote = async (req, res) => {
     }
 };
 
-// Archive a note
+
 const archiveNote = async (req, res) => {
     try {
         const note = await Note.findById(req.params.id);
@@ -95,7 +95,7 @@ const archiveNote = async (req, res) => {
     }
 };
 
-// Unarchive a note
+
 const unarchiveNote = async (req, res) => {
     try {
         const note = await Note.findById(req.params.id);
@@ -117,7 +117,7 @@ const unarchiveNote = async (req, res) => {
     }
 };
 
-// Set reminder for a note
+
 const setReminder = async (req, res) => {
     try {
         const note = await Note.findById(req.params.id);

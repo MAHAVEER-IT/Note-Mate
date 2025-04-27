@@ -49,7 +49,7 @@ function NoteCard({ note, onDelete, onArchive, onUnarchive, onSetReminder, isArc
       <p className="note-content">{note.content}</p>
       <div className="note-footer">
         <div className="note-timestamp">
-          {new Date(note.timestamp).toLocaleString()}
+          {new Date(note.createdAt).toLocaleString()}
         </div>
         {isSettingReminder && (
           <div className="reminder-picker">
