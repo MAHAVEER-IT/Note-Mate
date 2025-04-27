@@ -23,7 +23,7 @@ function App() {
         </div>
       </NotesProvider>
     </NotificationsProvider>
-  )
+  );
 }
 
 export default App

@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Menu, Search, Bell, User, FileText, Feather, Cpu, Settings } from 'lucide-react';
 import './NavBar.css';
 import * as AuthService from '../../services/authService';
 
-function NavBar({ toggleSidebar }) {
+function NavBar({ toggleSidebar, activeTab, setActiveTab }) {
   const user = AuthService.getCurrentUser();
-  const [activeTab, setActiveTab] = useState('notes');
 
   return (
     <nav className="navbar">

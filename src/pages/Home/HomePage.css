@@ -18,7 +18,23 @@
   margin-bottom: 1rem;
 }
 
+
 .main-content p {
   color: #666;
   font-size: 1.1rem;
+}
+
+/* src/pages/Home/HomePage.css */
+.sticky-area {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 70px); /* if your navbar is 70px height */
+  overflow: hidden;
+}
+
+/* Bonus */
+.sticky-note-list {
+  position: relative;
+  width: 100%;
+  height: 100%;
 }

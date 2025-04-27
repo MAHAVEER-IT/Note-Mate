@@ -1,0 +1,25 @@
+/* Pages/StickyNotesPage.css */
+.page {
+    min-height: 100vh;
+    background-color: #f3f4f6;
+    padding: 20px;
+    position: relative;
+  }
+  
+  .title {
+    text-align: center;
+    font-size: 36px;
+    color: #1f2937;
+  }
+  
+  .subtitle {
+    text-align: center;
+    color: #6b7280;
+    margin-bottom: 40px;
+  }
+  
+  .notes-container {
+    position: relative;
+    min-height: 80vh;
+  }
+  
