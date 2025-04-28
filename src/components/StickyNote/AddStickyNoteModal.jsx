@@ -1,4 +1,3 @@
-
 import { useContext } from 'react';
 import { StickyNotesContext } from '../../context/StickyNotesContext';
 import './StickyNote.css';
@@ -6,13 +5,29 @@ import './StickyNote.css';
 function AddStickyNoteModal() {
   const { addNote } = useContext(StickyNotesContext);
 
-  const handleAddNote = () => {
-    const randomX = Math.random() * window.innerWidth * 0.6;
-    const randomY = Math.random() * window.innerHeight * 0.6;
-    const colors = ['yellow', 'pink', 'green', 'blue', 'purple', 'red', 'indigo'];
-    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+  const handleAddNote = async () => {
+    try {
+      // Calculate random position within the sticky-note-list container
+      const container = document.querySelector('.sticky-note-list');
+      if (!container) {
+        console.warn('Sticky-note-list container not found');
+        return;
+      }
+      const containerWidth = container.offsetWidth;
+      const containerHeight = container.offsetHeight;
+      const noteWidth = 200; // From StickyNote.css
+      const noteHeight = 150; // From StickyNote.css
+      const randomX = Math.random() * (containerWidth - noteWidth);
+      const randomY = Math.random() * (containerHeight - noteHeight);
 
-    addNote(randomX, randomY, randomColor);
+      const colors = ['yellow', 'pink', 'green', 'blue', 'purple', 'red', 'indigo'];
+      const randomColor = colors[Math.floor(Math.random() * colors.length)];
+
+      console.log('Adding note with x:', randomX, 'y:', randomY, 'color:', randomColor); // Debug log
+      await addNote(randomX, randomY, randomColor);
+    } catch (err) {
+      console.error('Failed to add sticky note:', err);
+    }
   };
 
   return (

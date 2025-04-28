@@ -1,66 +1,59 @@
 /* components/StickyNote.css */
 .note {
-    position: absolute;
-    padding: 1rem;
-    width: 200px;
-    min-height: 150px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    user-select: none;
-    cursor: grab;
-  }
-  
-  .note-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.5rem;
-  }
-  
-  .note-content {
-    width: 100%;
-    height: 100px;
-    border: none;
-    background: transparent;
-    resize: none;
-    font-size: 1rem;
-    outline: none;
-  }  
-  
-  .note:hover {
-    transform: scale(1.02);
-  }
-  
-  /* Color styles */
-  .yellow { background-color: #fef08a; }
-  .pink { background-color: #fbcfe8; }
-  .green { background-color: #bbf7d0; }
-  .blue { background-color: #bfdbfe; }
-  .purple { background-color: #ddd6fe; }
-  .red { background-color: #fecaca; }
-  .indigo { background-color: #c7d2fe; }
-  
-  .add-note-btn {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    font-size: 30px;
-    background-color: #facc15;
-    color: white;
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-  }
-  .add-note-btn:hover {
-    transform: scale(1.1);
-  }
-  
-  .sticky-note-list {
-    position: relative;
-    height: 80vh;
-    overflow: hidden;
-  }
-  
+  position: absolute;
+  padding: 1rem;
+  width: 200px;
+  min-height: 150px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  cursor: grab;
+}
+
+.note-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.note-content {
+  width: 100%;
+  height: 100px;
+  border: none;
+  background: transparent;
+  resize: none;
+  font-size: 1rem;
+  outline: none;
+}
+
+.note:hover {
+  transform: scale(1.02);
+}
+
+/* Color styles */
+.yellow { background-color: #fef08a; }
+.pink { background-color: #fbcfe8; }
+.green { background-color: #bbf7d0; }
+.blue { background-color: #bfdbfe; }
+.purple { background-color: #ddd6fe; }
+.red { background-color: #fecaca; }
+.indigo { background-color: #c7d2fe; }
+
+.add-note-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  font-size: 30px;
+  background-color: #facc15;
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+
+.add-note-btn:hover {
+  transform: scale(1.1);
+}

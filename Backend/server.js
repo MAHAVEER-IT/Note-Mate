@@ -5,6 +5,7 @@ require('dotenv').config();
 
 const authRoutes = require('./routes/authRoutes');
 const noteRoutes = require('./routes/noteRoutes');
+const stickyNoteRoutes = require('./routes/stickyNoteRoutes')
 
 const app = express();
 
@@ -17,6 +18,8 @@ mongoose.connect(process.env.MONGODB_URI)
 
 app.use('/api/auth', authRoutes);
 app.use('/api/notes', noteRoutes);
+app.use('/api/sticky-notes',stickyNoteRoutes);
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

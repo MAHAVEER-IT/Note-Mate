@@ -1,9 +1,24 @@
-/* Notes Grid */
 .notes-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 1.5rem;
   padding: 1rem;
+}
+
+.note {
+  flex: 1 1 280px;
+  background-color: white;
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  transform-origin: center;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.note:hover {
+  transform: scale(1.02);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 .empty-notes {
@@ -16,17 +31,6 @@
   font-size: 2.5rem;
   color: #ddd;
   margin-bottom: 1rem;
-}
-
-/* Note Card */
-.note {
-  background-color: white;
-  border-radius: 0.75rem;
-  padding: 1.25rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  transform-origin: center;
-  animation: fadeIn 0.3s ease-in-out;
 }
 
 .note:hover {

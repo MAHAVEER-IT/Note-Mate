@@ -5,7 +5,7 @@ import Sidebar from '../../components/Sidebar/Sidebar';
 import NoteList from '../../components/Notes/NoteList';
 import AddNoteModal from '../../components/Notes/AddNoteModal';
 import { useNotes } from '../../context/NotesContext';
-import { StickyNoteProvider } from '../../context/StickyNotesContext'; 
+import { StickyNoteProvider } from '../../context/StickyNotesContext';
 import StickyNoteList from '../../components/StickyNote/StickyNoteList';
 import AddStickyNoteModal from '../../components/StickyNote/AddStickyNoteModal';
 import './HomePage.css';
@@ -14,7 +14,7 @@ function HomePage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isArchiveView, setIsArchiveView] = useState(false);
-  const [activeTab, setActiveTab] = useState('notes'); 
+  const [activeTab, setActiveTab] = useState('notes');
   const { addNote } = useNotes();
 
   const toggleSidebar = () => {
@@ -28,21 +28,22 @@ function HomePage() {
   return (
     <div className="home-page">
       <NavBar toggleSidebar={toggleSidebar} activeTab={activeTab} setActiveTab={setActiveTab} />
-      <Sidebar 
-        isOpen={isSidebarOpen} 
+      <Sidebar
+        isOpen={isSidebarOpen}
         onViewChange={handleViewChange}
         currentView={isArchiveView ? 'archive' : 'notes'}
       />
-      
+
       <main className={`main-content ${isSidebarOpen ? 'shifted' : ''}`}>
         {activeTab === 'notes' && (
-          <>
+          <div className="page">
             <div className="view-header">
-              <h1>{isArchiveView ? 'Archived Notes' : 'My Notes'}</h1>
+            <h1 className="page-title">{isArchiveView ? 'Archived Notes' : 'My Notes'}</h1>
+
             </div>
             <NoteList isArchiveView={isArchiveView} />
             {!isArchiveView && (
-              <button 
+              <button
                 className="add-note-button"
                 onClick={() => setIsModalOpen(true)}
               >
@@ -58,7 +59,7 @@ function HomePage() {
                 }}
               />
             )}
-          </>
+          </div>
         )}
 
         {activeTab === 'sticky' && (
