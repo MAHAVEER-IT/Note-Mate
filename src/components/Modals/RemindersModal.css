@@ -1,0 +1,71 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 45;
+}
+
+.reminders-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 80vh;
+  z-index: 50;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.reminders-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.reminders-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #333;
+}
+
+.reminders-content {
+  padding: 1rem;
+  overflow-y: auto;
+  max-height: calc(80vh - 60px);
+}
+
+.no-reminders {
+  text-align: center;
+  color: #666;
+  margin: 2rem 0;
+}
+
+.reminder-item {
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
+
+.reminder-item h3 {
+  margin: 0 0 0.5rem;
+  color: #333;
+}
+
+.reminder-time {
+  color: #8E54E9;
+  font-size: 0.875rem;
+  margin: 0.5rem 0;
+}
+
+.reminder-content {
+  color: #4b5563;
+  margin: 0;
+  font-size: 0.875rem;
+  white-space: pre-wrap;
+}

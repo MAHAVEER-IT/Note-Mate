@@ -10,12 +10,24 @@ function NoteList({ isArchiveView = false }) {
     deleteNote, 
     archiveNote, 
     unarchiveNote, 
-    setReminder 
+    setReminder,
+    isLoading
   } = useNotes();
 
-  const displayNotes = isArchiveView ? archivedNotes : notes;
+  // Ensure we're getting fresh references for each note
+  const currentNotes = isArchiveView ? archivedNotes : notes;
+  const displayNotes = currentNotes.reduce((unique, note) => {
+    if (!unique.some(item => item._id === note._id)) {
+      unique.push(note);
+    }
+    return unique;
+  }, []);
 
-  if (displayNotes.length === 0) {
+  if (isLoading) {
+    return <div className="empty-notes">Loading...</div>;
+  }
+
+  if (!displayNotes.length) {
     return (
       <div className="empty-notes">
         <i className="notes-icon"></i>
@@ -24,18 +36,21 @@ function NoteList({ isArchiveView = false }) {
     );
   }
 
+
   return (
     <div className="notes-grid">
-      {displayNotes.map((note, index) => (
-        <NoteCard
-        key={note._id}
-        note={note}
-        onDelete={() => deleteNote(note._id, isArchiveView)}
-        onArchive={() => archiveNote(note._id)}
-        onUnarchive={() => unarchiveNote(note._id)}
-        onSetReminder={(date) => setReminder(note._id, date, isArchiveView)}
-        isArchived={isArchiveView}
-      />      
+      {displayNotes.map((note) => (
+        <div key={`note-wrapper-${note._id}`} className="note-wrapper">
+          <NoteCard
+            key={`note-${note._id}`}
+            note={note}
+            onDelete={() => deleteNote(note._id, isArchiveView)}
+            onArchive={() => archiveNote(note._id)}
+            onUnarchive={() => unarchiveNote(note._id)}
+            onSetReminder={(date) => setReminder(note._id, date, isArchiveView)}
+            isArchived={isArchiveView}
+          />      
+        </div>
       ))}
     </div>
   );

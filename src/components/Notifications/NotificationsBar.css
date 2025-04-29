@@ -57,6 +57,24 @@
   color: #374151;
 }
 
+.notification-content {
+  flex: 1;
+  margin-right: 0.5rem;
+}
+
+.notification-details {
+  font-size: 0.8rem;
+  color: #666;
+  margin-top: 0.25rem;
+}
+
+.notification-time {
+  font-size: 0.75rem;
+  color: #888;
+  margin-top: 0.25rem;
+  font-style: italic;
+}
+
 .notification-close {
   background: none;
   border: none;

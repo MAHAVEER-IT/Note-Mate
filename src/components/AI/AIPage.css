@@ -1,0 +1,155 @@
+.ai-page {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.ai-input-section {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.ai-input {
+  flex: 1;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.ai-input:focus {
+  border-color: #8E54E9;
+  box-shadow: 0 0 0 2px rgba(142, 84, 233, 0.2);
+  outline: none;
+}
+
+.generate-button {
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #8E54E9, #4776E6);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.generate-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(142, 84, 233, 0.3);
+}
+
+.generate-button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.study-plan {
+  background-color: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.study-plan h2 {
+  color: #333;
+  margin-bottom: 2rem;
+  text-align: center;
+  font-size: 1.75rem;
+}
+
+.timeline {
+  position: relative;
+  padding: 1rem 0;
+}
+
+.timeline-item {
+  position: relative;
+  padding-bottom: 2rem;
+}
+
+.timeline-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+.time-marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 100px;
+  color: #8E54E9;
+}
+
+.time-marker span {
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.card {
+  flex: 1;
+  background: linear-gradient(135deg, #f6f8ff 0%, #f0e7fe 100%);
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card h3 {
+  color: #8E54E9;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+.card p {
+  color: #4a5568;
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.timeline-connector {
+  position: absolute;
+  left: 49px;
+  top: 60px;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, #8E54E9 50%, transparent 100%);
+}
+
+.error-message {
+  background-color: #fff3f3;
+  color: #dc3545;
+  padding: 1rem;
+  border-radius: 6px;
+  margin: 1rem 0;
+  border: 1px solid #ffcdd2;
+}
+
+@media (max-width: 640px) {
+  .ai-input-section {
+    flex-direction: column;
+  }
+
+  .timeline-content {
+    gap: 1rem;
+  }
+
+  .time-marker {
+    min-width: 80px;
+  }
+
+  .timeline-connector {
+    left: 39px;
+  }
+}

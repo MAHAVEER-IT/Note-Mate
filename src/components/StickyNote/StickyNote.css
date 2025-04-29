@@ -7,6 +7,22 @@
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   cursor: grab;
+  will-change: transform;
+  transform-origin: center;
+  transition: transform 0.1s ease-out;
+  user-select: none;
+  -webkit-user-select: none;
+  pointer-events: auto;
+  z-index: 1;
+}
+
+.note-container {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
 }
 
 .note-header {
@@ -28,6 +44,18 @@
 
 .note:hover {
   transform: scale(1.02);
+}
+
+.note.dragging {
+  cursor: grabbing;
+  opacity: 0.9;
+  transform: scale(1.02);
+  transition: transform 0.1s ease-out, opacity 0.1s ease-out;
+  z-index: 1000;
+}
+
+.note:active {
+  cursor: grabbing;
 }
 
 /* Color styles */
@@ -56,4 +84,19 @@
 
 .add-note-btn:hover {
   transform: scale(1.1);
+}
+
+body {
+  overflow: hidden;
+  margin: 0;
+  min-height: 100vh;
+}
+
+.sticky-notes-container {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
 }

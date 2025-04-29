@@ -6,8 +6,10 @@ import NoteList from '../../components/Notes/NoteList';
 import AddNoteModal from '../../components/Notes/AddNoteModal';
 import { useNotes } from '../../context/NotesContext';
 import { StickyNoteProvider } from '../../context/StickyNotesContext';
+import { AIProvider } from '../../context/AIContext';
 import StickyNoteList from '../../components/StickyNote/StickyNoteList';
 import AddStickyNoteModal from '../../components/StickyNote/AddStickyNoteModal';
+import AIPage from '../../components/AI/AIPage';
 import './HomePage.css';
 
 function HomePage() {
@@ -21,6 +23,10 @@ function HomePage() {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
+  const closeSidebar = () => {
+    setIsSidebarOpen(false);
+  };
+
   const handleViewChange = (isArchive) => {
     setIsArchiveView(isArchive);
   };
@@ -30,63 +36,63 @@ function HomePage() {
       <NavBar toggleSidebar={toggleSidebar} activeTab={activeTab} setActiveTab={setActiveTab} />
       <Sidebar
         isOpen={isSidebarOpen}
+        onClose={closeSidebar}
         onViewChange={handleViewChange}
         currentView={isArchiveView ? 'archive' : 'notes'}
       />
 
-      <main className={`main-content ${isSidebarOpen ? 'shifted' : ''}`}>
-        {activeTab === 'notes' && (
-          <div className="page">
-            <div className="view-header">
-            <h1 className="page-title">{isArchiveView ? 'Archived Notes' : 'My Notes'}</h1>
-
+      <div className={`page-wrapper ${isSidebarOpen ? 'shifted' : ''}`} onClick={isSidebarOpen ? closeSidebar : undefined}>
+        <main className="main-content">
+          {activeTab === 'notes' && (
+            <div className="notes-page">
+              <div className="view-header">
+                <h1 className="page-title">{isArchiveView ? 'Archived Notes' : 'My Notes'}</h1>
+              </div>
+              <div className="notes-content">
+                <NoteList isArchiveView={isArchiveView} />
+              </div>
+              {!isArchiveView && (
+                <button className="add-note-button" onClick={() => setIsModalOpen(true)}>
+                  <Plus size={24} />
+                </button>
+              )}
+              {isModalOpen && (
+                <AddNoteModal
+                  onClose={() => setIsModalOpen(false)}
+                  onSave={(note) => {
+                    addNote(note);
+                    setIsModalOpen(false);
+                  }}
+                />
+              )}
             </div>
-            <NoteList isArchiveView={isArchiveView} />
-            {!isArchiveView && (
-              <button
-                className="add-note-button"
-                onClick={() => setIsModalOpen(true)}
-              >
-                <Plus size={24} />
-              </button>
-            )}
-            {isModalOpen && (
-              <AddNoteModal
-                onClose={() => setIsModalOpen(false)}
-                onSave={(note) => {
-                  addNote(note);
-                  setIsModalOpen(false);
-                }}
-              />
-            )}
-          </div>
-        )}
+          )}
 
-        {activeTab === 'sticky' && (
-          <StickyNoteProvider>
+          {activeTab === 'sticky' && (
+            <StickyNoteProvider>
+              <div className="page">
+                <h1 className="title">Today's Focus</h1>
+                <p className="subtitle">Drag them around, change colors, and organize your thoughts!</p>
+                <StickyNoteList />
+                <AddStickyNoteModal />
+              </div>
+            </StickyNoteProvider>
+          )}
+
+          {activeTab === 'ai' && (
+            <AIProvider>
+              <AIPage />
+            </AIProvider>
+          )}
+
+          {activeTab === 'settings' && (
             <div className="page">
-              <h1 className="title">Interactive Sticky Notes</h1>
-              <p className="subtitle">Drag them around, change colors, and organize your thoughts!</p>
-              <StickyNoteList />
-              <AddStickyNoteModal />
+              <h1 className="title">Settings</h1>
+              <p className="subtitle">Manage your account settings here.</p>
             </div>
-          </StickyNoteProvider>
-        )}
-
-        {activeTab === 'ai' && (
-          <div className="page">
-            <h1 className="title">AI Creator</h1>
-            <p className="subtitle">This will be your AI content generation space.</p>
-          </div>
-        )}
-
-        {activeTab === 'settings' && (
-          <div className="page">
-            <h1 className="title">Settings</h1>
-            <p className="subtitle">Manage your account settings here.</p>
-          </div>
-        )}
-      </main>
+          )}
+        </main>
+      </div>
     </div>
   );
 }

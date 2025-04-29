@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, AlertCircle, Info, CheckCircle } from 'lucide-react';
+import { X, AlertCircle, Info, CheckCircle, Bell } from 'lucide-react';
 import { useNotifications } from '../../context/NotificationsContext';
 import './NotificationsBar.css';
 
@@ -12,6 +12,8 @@ function NotificationsBar() {
         return <AlertCircle size={20} />;
       case 'success':
         return <CheckCircle size={20} />;
+      case 'reminder':
+        return <Bell size={20} />;
       default:
         return <Info size={20} />;
     }
@@ -29,7 +31,17 @@ function NotificationsBar() {
           <div className="notification-icon">
             {getIcon(notification.type)}
           </div>
-          <p className="notification-message">{notification.message}</p>
+          <div className="notification-content">
+            <p className="notification-message">{notification.message}</p>
+            {notification.content && (
+              <p className="notification-details">{notification.content}</p>
+            )}
+            {notification.reminder && (
+              <p className="notification-time">
+                {new Date(notification.reminder).toLocaleTimeString()}
+              </p>
+            )}
+          </div>
           <button
             className="notification-close"
             onClick={() => removeNotification(notification.id)}

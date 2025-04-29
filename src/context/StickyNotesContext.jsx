@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect, useCallback, useMemo } from 'react';
 import {
   fetchStickyNotes,
   createStickyNote,
@@ -7,6 +7,20 @@ import {
 } from '../services/StickyNoteService';
 
 export const StickyNotesContext = createContext();
+
+const DEBOUNCE_DELAY = 500;
+
+function debounce(func, wait) {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
 
 export function StickyNoteProvider({ children }) {
   const [notes, setNotes] = useState([]);
@@ -54,36 +68,82 @@ export function StickyNoteProvider({ children }) {
 
   const deleteNote = async (id) => {
     try {
-      setLoading(true);
       await deleteStickyNote(id);
-      setNotes((prev) => prev.filter((note) => note._id !== id));
+      setNotes(prev => prev.filter(note => note._id !== id));
       setError(null);
     } catch (err) {
+      console.error('Error deleting note:', err);
       setError(err.message);
-    } finally {
-      setLoading(false);
     }
   };
+
+  const updateNoteLocal = (id, updatedFields) => {
+    setNotes(prev =>
+      prev.map(note => 
+        note._id === id 
+          ? { ...note, ...updatedFields }
+          : note
+      )
+    );
+  };
+
+  const debouncedUpdateNote = useCallback(
+    debounce(async (id, updatedFields) => {
+      try {
+        const updatedNote = await updateStickyNote(id, updatedFields);
+        console.log('Note updated on server:', updatedNote);
+      } catch (err) {
+        console.error('Error updating note:', err);
+        setError(err.message);
+      }
+    }, DEBOUNCE_DELAY),
+    []
+  );
 
   const updateNote = async (id, updatedFields) => {
+    // Immediately update local state
+    updateNoteLocal(id, updatedFields);
+
     try {
-      setLoading(true);
-      const updatedNote = await updateStickyNote(id, updatedFields);
-      setNotes((prev) =>
-        prev.map((note) => (note._id === id ? { ...updatedNote } : note))
-      );
+      // For position updates, update silently without loading state
+      if (updatedFields.x !== undefined || updatedFields.y !== undefined) {
+        await updateStickyNote(id, updatedFields);
+      } else {
+        // For content updates, use debounce
+        debouncedUpdateNote(id, updatedFields);
+      }
       setError(null);
     } catch (err) {
+      console.error('Error updating note:', err);
       setError(err.message);
-    } finally {
-      setLoading(false);
+      // Revert local state on error
+      const originalNote = notes.find(note => note._id === id);
+      if (originalNote) {
+        updateNoteLocal(id, originalNote);
+      }
     }
   };
 
+  // Add index to notes
+  const notesWithIndex = useMemo(() => {
+    return notes.map((note, index) => ({
+      ...note,
+      displayIndex: index + 1
+    }));
+  }, [notes]);
+
+  // Prevent unnecessary re-renders
+  const contextValue = useMemo(() => ({
+    notes: notesWithIndex,
+    addNote,
+    deleteNote,
+    updateNote,
+    loading,
+    error
+  }), [notesWithIndex, loading, error]);
+
   return (
-    <StickyNotesContext.Provider
-      value={{ notes, addNote, deleteNote, updateNote, loading, error }}
-    >
+    <StickyNotesContext.Provider value={contextValue}>
       {children}
     </StickyNotesContext.Provider>
   );

@@ -1,29 +1,35 @@
-import React from 'react'
-import { Routes, Route, Navigate } from 'react-router-dom'
-import './App.css'
-import Login from "./pages/Login"
-import Register from "./pages/Register"
-import HomePage from './pages/Home/HomePage'
-import { NotesProvider } from './context/NotesContext'
-import { NotificationsProvider } from './context/NotificationsContext'
-import NotificationsBar from './components/Notifications/NotificationsBar'
+import React from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import { NotesProvider } from './context/NotesContext';
+import { NotificationsProvider } from './context/NotificationsContext';
+import { AIProvider } from './context/AIContext';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import HomePage from './pages/Home/HomePage';
+import NotificationsBar from './components/Notifications/NotificationsBar';
+import './App.css';
 
 function App() {
   return (
-    <NotificationsProvider>
-      <NotesProvider>
-        <div className="app-container">
-          <NotificationsBar />
-          <Routes>
-            <Route path="/" element={<Navigate to="/login" />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/home" element={<HomePage />} />
-          </Routes>
-        </div>
-      </NotesProvider>
-    </NotificationsProvider>
+    <div className="App">
+      <AuthProvider>
+        <NotesProvider>
+          <NotificationsProvider>
+            <AIProvider>
+              <NotificationsBar />
+              <Routes>
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/home" element={<HomePage />} />
+                <Route path="/" element={<Navigate to="/home" replace />} />
+              </Routes>
+            </AIProvider>
+          </NotificationsProvider>
+        </NotesProvider>
+      </AuthProvider>
+    </div>
   );
 }
 
-export default App
+export default App;

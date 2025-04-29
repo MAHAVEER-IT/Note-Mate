@@ -1,12 +1,30 @@
 .home-page {
   min-height: 100vh;
   background-color: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-wrapper {
+  flex: 1;
+  margin-left: 0;
+  transition: margin-left 0.3s ease;
+}
+
+.page-wrapper.shifted {
+  margin-left: 280px;
+}
+
+.notes-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
 .main-content {
   padding: 2rem;
-  margin-left: 0;
-  transition: margin-left 0.3s ease;
+  height: calc(100vh - 64px); /* Adjust based on your navbar height */
+  overflow-y: auto;
 }
 
 .main-content.shifted {
@@ -18,10 +36,19 @@
   margin-bottom: 1rem;
 }
 
-
 .main-content p {
   color: #666;
   font-size: 1.1rem;
+}
+
+.notes-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.notes-content {
+  margin-top: 2rem;
 }
 
 /* src/pages/Home/HomePage.css */
