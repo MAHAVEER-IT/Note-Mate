@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = 'http://localhost:5000/api/notes';
+const API_URL = 'https://note-mate-backend.onrender.com/api/notes';
 
 const getNotes = async (token) => {
     const res = await axios.get(API_URL, {

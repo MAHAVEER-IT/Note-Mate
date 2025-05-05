@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getCurrentUser } from './authService';
 
-const API_URL = 'http://localhost:5000/api/ai-schedules';
+const API_URL = 'https://note-mate-backend.onrender.com/api/ai-schedules';
 
 const getAuthHeader = () => {
   const token = getCurrentUser()?.token;

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {getCurrentUser} from '../services/authService';
 
-const API_URL ='http://localhost:5000/api/sticky-notes';
+const API_URL ='https://note-mate-backend.onrender.com/api/sticky-notes';
 
 
 const getAuthHeader = () => {
