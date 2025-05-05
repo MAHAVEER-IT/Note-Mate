@@ -22,12 +22,19 @@ export const AIProvider = ({ children }) => {
     }
   };
 
+  const setExistingPlan = (schedule) => {
+    setStudyPlan({ schedule });
+    setError(null);
+    setIsLoading(false);
+  };
+
   return (
     <AIContext.Provider value={{ 
       studyPlan, 
       isLoading, 
       error,
-      generateStudyPlan: generatePlan 
+      generateStudyPlan: generatePlan,
+      setExistingPlan 
     }}>
       {children}
     </AIContext.Provider>

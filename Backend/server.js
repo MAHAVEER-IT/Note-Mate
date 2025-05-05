@@ -6,6 +6,7 @@ require('dotenv').config();
 const authRoutes = require('./routes/authRoutes');
 const noteRoutes = require('./routes/noteRoutes');
 const stickyNoteRoutes = require('./routes/stickyNoteRoutes')
+const aiScheduleRoutes = require('./routes/aiScheduleRoutes')
 
 const app = express();
 
@@ -19,6 +20,7 @@ mongoose.connect(process.env.MONGODB_URI)
 app.use('/api/auth', authRoutes);
 app.use('/api/notes', noteRoutes);
 app.use('/api/sticky-notes',stickyNoteRoutes);
+app.use('/api/ai-schedules', aiScheduleRoutes);
 
 
 const PORT = process.env.PORT || 5000;

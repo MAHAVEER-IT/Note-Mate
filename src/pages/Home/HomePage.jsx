@@ -72,7 +72,6 @@ function HomePage() {
             <StickyNoteProvider>
               <div className="page">
                 <h1 className="title">Today's Focus</h1>
-                <p className="subtitle">Drag them around, change colors, and organize your thoughts!</p>
                 <StickyNoteList />
                 <AddStickyNoteModal />
               </div>
