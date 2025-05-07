@@ -261,3 +261,43 @@
     transform: translateX(0);
   }
 }
+
+@media screen and (max-width: 768px) {
+  .ai-page {
+    padding: 1rem;
+  }
+
+  .history-modal {
+    width: 100%;
+    right: 0;
+  }
+
+  .timeline-content {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .time-marker {
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 0.5rem;
+  }
+
+  .timeline-connector {
+    display: none;
+  }
+
+  .card {
+    margin-left: 2rem;
+  }
+
+  .study-plan {
+    padding: 1rem;
+  }
+
+  .study-plan-header {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+}

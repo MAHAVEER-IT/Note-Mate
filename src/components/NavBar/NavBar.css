@@ -44,7 +44,8 @@
 .navbar-left {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1rem;
+  padding-left: 1rem;
 }
 
 .menu-button {
@@ -120,4 +121,68 @@
   font-size: 0.9rem;
   font-weight: 500;
   color: #333;
+}
+
+.notification-button {
+  position: relative;
+}
+
+.notification-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: #ef4444;
+  color: white;
+  font-size: 12px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+@media screen and (max-width: 768px) {
+  .navbar {
+    padding: 0.5rem;
+    flex-direction: column;
+  }
+
+  .nav-tabs {
+    width: 100%;
+    overflow-x: auto;
+    padding: 0.5rem 0;
+    justify-content: flex-start;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .nav-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-tab {
+    white-space: nowrap;
+    padding: 0.5rem;
+  }
+
+  .nav-tab span {
+    display: none;
+  }
+
+  .navbar-right {
+    width: 100%;
+    justify-content: space-between;
+    padding-top: 0.5rem;
+  }
+
+  .search-bar {
+    width: 100%;
+    max-width: none;
+  }
+
+  .user-profile {
+    display: none;
+  }
 }

@@ -100,3 +100,32 @@ body {
   bottom: 0;
   overflow: hidden;
 }
+
+@media screen and (max-width: 768px) {
+  .note {
+    width: 160px;
+    min-height: 120px;
+  }
+
+  .note-content {
+    height: 80px;
+    font-size: 0.9rem;
+  }
+
+  .note-header {
+    font-size: 0.9rem;
+  }
+
+  .note-header button {
+    padding: 0.25rem;
+    font-size: 0.9rem;
+  }
+
+  .add-note-btn {
+    width: 50px;
+    height: 50px;
+    bottom: 20px;
+    right: 20px;
+    font-size: 24px;
+  }
+}

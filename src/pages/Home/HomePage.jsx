@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Plus } from 'lucide-react';
 import NavBar from '../../components/NavBar/NavBar';
-import Sidebar from '../../components/Sidebar/Sidebar';
 import NoteList from '../../components/Notes/NoteList';
 import AddNoteModal from '../../components/Notes/AddNoteModal';
 import { useNotes } from '../../context/NotesContext';
@@ -13,50 +12,27 @@ import AIPage from '../../components/AI/AIPage';
 import './HomePage.css';
 
 function HomePage() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isArchiveView, setIsArchiveView] = useState(false);
   const [activeTab, setActiveTab] = useState('notes');
   const { addNote } = useNotes();
 
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
-
-  const closeSidebar = () => {
-    setIsSidebarOpen(false);
-  };
-
-  const handleViewChange = (isArchive) => {
-    setIsArchiveView(isArchive);
-  };
-
   return (
     <div className="home-page">
-      <NavBar toggleSidebar={toggleSidebar} activeTab={activeTab} setActiveTab={setActiveTab} />
-      <Sidebar
-        isOpen={isSidebarOpen}
-        onClose={closeSidebar}
-        onViewChange={handleViewChange}
-        currentView={isArchiveView ? 'archive' : 'notes'}
-      />
-
-      <div className={`page-wrapper ${isSidebarOpen ? 'shifted' : ''}`} onClick={isSidebarOpen ? closeSidebar : undefined}>
+      <NavBar activeTab={activeTab} setActiveTab={setActiveTab} />
+      <div className="page-wrapper">
         <main className="main-content">
           {activeTab === 'notes' && (
             <div className="notes-page">
               <div className="view-header">
-                <h1 className="page-title">{isArchiveView ? 'Archived Notes' : 'My Notes'}</h1>
+                <h1 className="page-title">My Notes</h1>
               </div>
               <div className="notes-content">
-                <NoteList isArchiveView={isArchiveView} />
+                <NoteList isArchiveView={false} />
               </div>
-              {!isArchiveView && (
-                <button className="add-note-button" onClick={() => setIsModalOpen(true)}>
-                  <Plus size={24} />
-                </button>
-              )}
-              {isModalOpen && (
+              <button className="add-note-button" onClick={() => setIsModalOpen(true)}>
+                <Plus size={24} />
+              </button>
+              {isModalOpen && (     
                 <AddNoteModal
                   onClose={() => setIsModalOpen(false)}
                   onSave={(note) => {
@@ -65,6 +41,17 @@ function HomePage() {
                   }}
                 />
               )}
+            </div>
+          )}
+
+          {activeTab === 'archive' && (
+            <div className="notes-page">
+              <div className="view-header">
+                <h1 className="page-title">Archived Notes</h1>
+              </div>
+              <div className="notes-content">
+                <NoteList isArchiveView={true} />
+              </div>
             </div>
           )}
 
