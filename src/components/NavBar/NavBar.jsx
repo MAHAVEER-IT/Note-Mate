@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Search, Bell, User, FileText, Feather, Cpu, Settings, Archive } from 'lucide-react';
 import './NavBar.css';
 import * as AuthService from '../../services/authService';
@@ -6,9 +7,15 @@ import { useNotes } from '../../context/NotesContext';
 import RemindersModal from '../Modals/RemindersModal';
 
 function NavBar({ activeTab, setActiveTab }) {
+  const navigate = useNavigate();
   const user = AuthService.getCurrentUser();
   const [showReminders, setShowReminders] = useState(false);
   const { notes, archivedNotes } = useNotes();  // Add archivedNotes from useNotes
+
+  const handleLogout = () => {
+    AuthService.logout();
+    navigate('/login');
+  };
 
   // Get today's reminders count
   const todayReminders = notes.filter(note => {
@@ -68,10 +75,6 @@ function NavBar({ activeTab, setActiveTab }) {
           </div>
         </div>
         <div className="navbar-right">
-          <div className="search-bar">
-            <Search size={20} className="search-icon" />
-            <input type="text" placeholder="Search notes..." />
-          </div>
           <button 
             className="icon-button notification-button"
             onClick={() => setShowReminders(true)}
@@ -84,6 +87,9 @@ function NavBar({ activeTab, setActiveTab }) {
           <div className="user-profile">
             <User size={24} />
             <span className="username">{user?.username || 'User'}</span>
+            <button onClick={handleLogout} className="logout-button">
+              Logout
+            </button>
           </div>
         </div>
       </nav>
