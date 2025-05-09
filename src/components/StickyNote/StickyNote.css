@@ -58,14 +58,23 @@
   cursor: grabbing;
 }
 
-/* Color styles */
-.yellow { background-color: #fef08a; }
-.pink { background-color: #fbcfe8; }
-.green { background-color: #bbf7d0; }
-.blue { background-color: #bfdbfe; }
-.purple { background-color: #ddd6fe; }
-.red { background-color: #fecaca; }
-.indigo { background-color: #c7d2fe; }
+/* Color styles with more vibrant colors and better opacity */
+.note.yellow { background-color: rgba(254, 240, 138, 0.95); }
+.note.pink { background-color: rgba(251, 207, 232, 0.95); }
+.note.green { background-color: rgba(187, 247, 208, 0.95); }
+.note.blue { background-color: rgba(191, 219, 254, 0.95); }
+.note.purple { background-color: rgba(221, 214, 254, 0.95); }
+.note.red { background-color: rgba(254, 202, 202, 0.95); }
+.note.indigo { background-color: rgba(199, 210, 254, 0.95); }
+
+/* Add hover effects for each color */
+.note.yellow:hover { background-color: rgba(254, 240, 138, 1); }
+.note.pink:hover { background-color: rgba(251, 207, 232, 1); }
+.note.green:hover { background-color: rgba(187, 247, 208, 1); }
+.note.blue:hover { background-color: rgba(191, 219, 254, 1); }
+.note.purple:hover { background-color: rgba(221, 214, 254, 1); }
+.note.red:hover { background-color: rgba(254, 202, 202, 1); }
+.note.indigo:hover { background-color: rgba(199, 210, 254, 1); }
 
 .add-note-btn {
   position: fixed;

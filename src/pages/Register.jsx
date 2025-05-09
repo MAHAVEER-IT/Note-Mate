@@ -11,23 +11,31 @@ function Register() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [username, setUsername] = useState("");
+    const [error, setError] = useState("");
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Register form submitted");
-        try{
-            if(!email || !password || !username){
-                console.log("All fields are required");
+        setError("");
+
+        try {
+            if (!email || !password || !username) {
+                setError("All fields are required");
                 return;
             }
-            const response = AuthService.register(username,email,password);
-            console.log(response.data);
-            if(response){
-                console.log("Registration successful", response.data);
+
+            if (password.length < 6) {
+                setError("Password must be at least 6 characters long");
+                return;
+            }
+
+            const response = await AuthService.register(username, email, password);
+            if (response) {
+                console.log("Registration successful");
                 navigate('/login');
             }
-        }catch(error){
+        } catch (error) {
+            setError(error.response?.data?.message || "Registration failed");
             console.error("Registration failed", error);
         }
     };
@@ -85,6 +93,12 @@ function Register() {
                         </p>
                     </div>
                     
+                    {error && (
+                        <div className="notes-app-error">
+                            {error}
+                        </div>
+                    )}
+                    
                     <form onSubmit={handleSubmit} className="notes-app-form">
                         <div className="notes-app-input-group">
                             <i className="user-icon notes-app-input-icon"></i>
@@ -114,11 +128,12 @@ function Register() {
                             <i className="lock-icon notes-app-input-icon"></i>
                             <input
                                 type="password"
-                                placeholder="Password"
+                                placeholder="Password (min. 6 characters)"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 className="notes-app-input"
                                 required
+                                minLength={6}
                             />
                         </div>
                         

@@ -20,6 +20,35 @@ body {
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.5;
   color: #333;
+  background: var(--theme-background);
+  color: var(--theme-text);
+}
+
+:root {
+  --theme-background: linear-gradient(135deg, #f6f8ff 0%, #f0e7fe 100%);
+  --theme-text: #333;
+  --theme-card: rgba(255, 255, 255, 0.9);
+}
+
+.App {
+  min-height: 100vh;
+  transition: background 0.3s ease;
+  background: var(--theme-background);
+}
+
+.home-page {
+  background: var(--theme-background);
+}
+
+.notes-page {
+  background: transparent;
+}
+
+.settings-container,
+.note,
+.modal,
+.reminders-modal {
+  background: var(--theme-card);
 }
 
 /* Ensure proper layout for auth pages */

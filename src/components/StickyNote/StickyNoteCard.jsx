@@ -62,7 +62,7 @@ function StickyNoteCard({ note }) {
 
   const handleChangeColor = () => {
     const colors = ['yellow', 'pink', 'green', 'blue', 'purple', 'red', 'indigo'];
-    const currentIndex = colors.indexOf(note.color);
+    const currentIndex = colors.indexOf(note.color || 'yellow');
     const nextColor = colors[(currentIndex + 1) % colors.length];
     updateNote(note._id, { color: nextColor });
   };

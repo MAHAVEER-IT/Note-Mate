@@ -7,7 +7,6 @@ function AddStickyNoteModal() {
 
   const handleAddNote = async () => {
     try {
-      // Calculate random position within the sticky-note-list container
       const container = document.querySelector('.sticky-note-list');
       if (!container) {
         console.warn('Sticky-note-list container not found');
@@ -23,7 +22,6 @@ function AddStickyNoteModal() {
       const colors = ['yellow', 'pink', 'green', 'blue', 'purple', 'red', 'indigo'];
       const randomColor = colors[Math.floor(Math.random() * colors.length)];
 
-      console.log('Adding note with x:', randomX, 'y:', randomY, 'color:', randomColor); // Debug log
       await addNote(randomX, randomY, randomColor);
     } catch (err) {
       console.error('Failed to add sticky note:', err);

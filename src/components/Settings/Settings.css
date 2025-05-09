@@ -1,0 +1,77 @@
+.settings-page {
+  padding: 2rem;
+  min-height: calc(100vh - 64px);
+}
+
+.settings-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.settings-container h1 {
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+.settings-section {
+  margin-bottom: 2rem;
+}
+
+.settings-section h2 {
+  font-size: 1.25rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.theme-selector {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1rem;
+}
+
+.theme-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: var(--theme-card);
+  position: relative;
+  overflow: hidden;
+}
+
+.theme-button:hover {
+  transform: translateY(-2px);
+}
+
+.theme-button:hover .theme-preview {
+  transform: scale(1.02);
+}
+
+.theme-button.active {
+  border-color: #8E54E9;
+  box-shadow: 0 0 0 2px rgba(142, 84, 233, 0.2);
+}
+
+.theme-preview {
+  width: 100%;
+  height: 100px;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+  transition: transform 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.theme-button span {
+  font-size: 0.9rem;
+  color: var(--theme-text);
+  position: relative;
+  z-index: 1;
+}

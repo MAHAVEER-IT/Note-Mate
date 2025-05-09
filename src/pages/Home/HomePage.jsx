@@ -9,6 +9,7 @@ import { AIProvider } from '../../context/AIContext';
 import StickyNoteList from '../../components/StickyNote/StickyNoteList';
 import AddStickyNoteModal from '../../components/StickyNote/AddStickyNoteModal';
 import AIPage from '../../components/AI/AIPage';
+import SettingsPage from '../../components/Settings/SettingsPage';
 import './HomePage.css';
 
 function HomePage() {
@@ -72,10 +73,7 @@ function HomePage() {
           )}
 
           {activeTab === 'settings' && (
-            <div className="page">
-              <h1 className="title">Settings</h1>
-              <p className="subtitle">Manage your account settings here.</p>
-            </div>
+            <SettingsPage />
           )}
         </main>
       </div>
