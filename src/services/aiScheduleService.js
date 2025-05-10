@@ -29,3 +29,14 @@ export const getSchedules = async () => {
     throw new Error(error.response?.data?.message || 'Failed to fetch schedules');
   }
 };
+
+export const updateSchedule = async (id, scheduleData) => {
+  try {
+    const response = await axios.put(`${API_URL}/${id}`, scheduleData, {
+      headers: getAuthHeader()
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.message || 'Failed to update schedule');
+  }
+};

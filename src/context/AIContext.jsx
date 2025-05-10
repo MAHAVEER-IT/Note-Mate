@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
 import { generateStudyPlan } from '../services/geminiService';
+import { updateSchedule as updateScheduleService } from '../services/aiScheduleService';
 
 const AIContext = createContext();
 
@@ -28,13 +29,30 @@ export const AIProvider = ({ children }) => {
     setIsLoading(false);
   };
 
+  const updateSchedule = async (id, scheduleData) => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const updatedSchedule = await updateScheduleService(id, scheduleData);
+      setStudyPlan({ schedule: updatedSchedule.schedule });
+      return updatedSchedule;
+    } catch (err) {
+      setError(err.message);
+      console.error('Failed to update schedule:', err);
+      throw err;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <AIContext.Provider value={{ 
       studyPlan, 
       isLoading, 
       error,
       generateStudyPlan: generatePlan,
-      setExistingPlan 
+      setExistingPlan,
+      updateSchedule
     }}>
       {children}
     </AIContext.Provider>

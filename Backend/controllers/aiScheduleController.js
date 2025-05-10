@@ -25,7 +25,29 @@ const getSchedules = async (req, res) => {
   }
 };
 
+const updateSchedule = async (req, res) => {
+  try {
+    const { prompt, schedule } = req.body;
+    const scheduleId = req.params.id;
+
+    const updatedSchedule = await AISchedule.findOneAndUpdate(
+      { _id: scheduleId, user: req.user._id },
+      { prompt, schedule },
+      { new: true }
+    );
+
+    if (!updatedSchedule) {
+      return res.status(404).json({ message: 'Schedule not found or unauthorized' });
+    }
+
+    res.json(updatedSchedule);
+  } catch (error) {
+    res.status(400).json({ message: 'Error updating schedule', error: error.message });
+  }
+};
+
 module.exports = {
   saveSchedule,
-  getSchedules
+  getSchedules,
+  updateSchedule
 };
