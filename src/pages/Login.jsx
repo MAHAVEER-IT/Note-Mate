@@ -1,33 +1,40 @@
 import React, { useState } from "react";
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../Styles/Login.css";
 import NotesImage from "../assets/images/Notes.png";
 import img1 from "../assets/images/img1.png";
 import img2 from "../assets/images/img2.png";
 import img3 from "../assets/images/img3.png";
-import * as AuthService from "../services/authService"
+import * as AuthService from "../services/authService";
+import { Eye, EyeOff } from "lucide-react";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setIsLoading(true);
     try {
-      if(!email || !password) {
+      if (!email || !password) {
         setError("Email and password are required");
+        setIsLoading(false);
         return;
       }
       const response = await AuthService.login(email, password);
       if (response) {
-        navigate('/home');
+        navigate("/home");
       }
-    } catch(error) {
+    } catch (error) {
       setError(error.response?.data?.message || "Login failed");
       console.error("Login failed", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -106,13 +113,19 @@ function Login() {
             <div className="notes-app-input-group">
               <i className="lock-icon notes-app-input-icon"></i>
               <input
-                type="password"
+                type={isPasswordVisible ? "text" : "password"}
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="notes-app-input"
                 required
               />
+              <span
+                className="password-toggle-icon"
+                onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+              >
+                {isPasswordVisible ? <EyeOff size={20} /> : <Eye size={20} />}
+              </span>
             </div>
             
             <div className="notes-app-forgot-password">
@@ -121,8 +134,8 @@ function Login() {
               </a>
             </div>
             
-            <button type="submit" className="notes-app-button">
-              Sign In
+            <button type="submit" className="notes-app-button" disabled={isLoading}>
+              {isLoading ? <div className="spinner"></div> : "Sign In"}
             </button>
           </form>
           

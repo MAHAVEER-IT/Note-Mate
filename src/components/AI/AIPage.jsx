@@ -12,6 +12,7 @@ const AIPage = () => {
   const [showHistory, setShowHistory] = useState(false);
   const [scheduleHistory, setScheduleHistory] = useState([]);
   const [isRecording, setIsRecording] = useState(false);
+  const [hasStarted, setHasStarted] = useState(false);
   const recognition = useMemo(() => {
     if (window.SpeechRecognition || window.webkitSpeechRecognition) {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -40,6 +41,7 @@ const AIPage = () => {
   };
 
   const handleGeneratePlan = async () => {
+    setHasStarted(true);
     await generateStudyPlan(prompt || 'Give me a study plan for tomorrow');
   };
 
@@ -101,105 +103,136 @@ const AIPage = () => {
   return (
     <div className="ai-page-wrapper">
       <div className="ai-page">
-        <button 
-          className="history-corner-button"
-          onClick={() => setShowHistory(!showHistory)}
-        >
-          <History size={24} />
-        </button>
-
-        {error && (
-          <div className="error-message">
-            Error: {error}. Please try again.
-          </div>
-        )}
-
-        {studyPlan && !error && (
-          <div className="study-plan">
-            <div className="study-plan-header">
-              <h2>Your Study Schedule</h2>
-              <button 
-                className="save-button"
-                onClick={handleSaveSchedule}
-              >
-                Save Schedule
-              </button>
-            </div>
-            <div className="timeline">
-              {studyPlan.schedule.map((item, index) => (
-                <div key={index} className="timeline-item">
-                  <div className="timeline-content">
-                    <div className="time-marker">
-                      <Calendar size={20} />
-                      <span>{item.time}</span>
-                    </div>
-                    <div className="card">
-                      <h3>{item.time}</h3>
-                      <p>{item.activity}</p>
-                    </div>
+        {!hasStarted && !studyPlan && (
+          <div className="ai-welcome">
+            <div className="ai-welcome-content">
+              <h1>Welcome to AI Study Planner</h1>
+              <p>Your personal AI assistant for creating effective study schedules.</p>
+              <div className="ai-features">
+                <div className="ai-feature">                  <Calendar size={24} />
+                  <div className="ai-feature-content">
+                    <h3>Smart Scheduling</h3>
+                    <p>Get personalized study plans based on your needs</p>
                   </div>
-                  {index < studyPlan.schedule.length - 1 && <div className="timeline-connector" />}
                 </div>
-              ))}
+                <div className="ai-feature">                  <History size={24} />
+                  <div className="ai-feature-content">
+                    <h3>Track History</h3>
+                    <p>Access and review your previous study plans</p>
+                  </div>
+                </div>
+                <div className="ai-feature">
+                  <Mic size={24} />
+                  <h3>Voice Input</h3>
+                  <p>Speak your requirements for quick plan generation</p>
+                </div>
+              </div>
+              <p className="ai-start-prompt">Type your study requirements below or use voice input to get started!</p>
             </div>
           </div>
         )}
 
-        {showHistory && (
-          <div className="history-modal">
-            <div className="history-content">
-              <div className="history-header">
-                <h3>Schedule History</h3>
+        <div className={`ai-interface ${!hasStarted && !studyPlan ? 'with-welcome' : ''}`}>
+          <button 
+            className="history-corner-button"
+            onClick={() => setShowHistory(!showHistory)}
+          >
+            <History size={24} />
+          </button>
+
+          {error && (
+            <div className="error-message">
+              Error: {error}. Please try again.
+            </div>
+          )}
+
+          {studyPlan && !error && (
+            <div className="study-plan">
+              <div className="study-plan-header">
+                <h2>Your Study Schedule</h2>
                 <button 
-                  className="close-button"
-                  onClick={() => setShowHistory(false)}
+                  className="save-button"
+                  onClick={handleSaveSchedule}
                 >
-                  <X size={20} />
+                  Save Schedule
                 </button>
               </div>
-              <div className="history-list">
-                {scheduleHistory.map((item) => (
-                  <div 
-                    key={item._id}
-                    className="history-item"
-                    onClick={() => loadHistorySchedule(item)}
-                  >
-                    <p className="history-prompt">{item.prompt}</p>
-                    <span className="history-date">
-                      {new Date(item.createdAt).toLocaleDateString()}
-                    </span>
+              <div className="timeline">
+                {studyPlan.schedule.map((item, index) => (
+                  <div key={index} className="timeline-item">
+                    <div className="timeline-content">
+                      <div className="time-marker">
+                        <Calendar size={20} />
+                        <span>{item.time}</span>
+                      </div>
+                      <div className="card">
+                        <h3>{item.time}</h3>
+                        <p>{item.activity}</p>
+                      </div>
+                    </div>
+                    {index < studyPlan.schedule.length - 1 && <div className="timeline-connector" />}
                   </div>
                 ))}
               </div>
             </div>
-          </div>
-        )}
+          )}
 
-        <div className="ai-input-section">
-          <div className="input-with-mic">
-            <input
-              type="text"
-              placeholder="Ask for a study plan..."
-              value={prompt}
-              onChange={(e) => setPrompt(e.target.value)}
-              className="ai-input"
+          {showHistory && (
+            <div className="history-modal">
+              <div className="history-content">
+                <div className="history-header">
+                  <h3>Schedule History</h3>
+                  <button 
+                    className="close-button"
+                    onClick={() => setShowHistory(false)}
+                  >
+                    <X size={20} />
+                  </button>
+                </div>
+                <div className="history-list">
+                  {scheduleHistory.map((item) => (
+                    <div 
+                      key={item._id}
+                      className="history-item"
+                      onClick={() => loadHistorySchedule(item)}
+                    >
+                      <p className="history-prompt">{item.prompt}</p>
+                      <span className="history-date">
+                        {new Date(item.createdAt).toLocaleDateString()}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          <div className="ai-input-section">
+            <div className="input-with-mic">
+              <input
+                type="text"
+                placeholder="Ask for a study plan..."
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
+                className="ai-input"
+                disabled={isLoading}
+              />
+              <button
+                onClick={isRecording ? stopRecording : startRecording}
+                className={`mic-button ${isRecording ? 'recording' : ''}`}
+                title={isRecording ? 'Stop recording' : 'Start recording'}
+              >
+                {isRecording ? <MicOff size={20} /> : <Mic size={20} />}
+              </button>
+            </div>
+            <button 
+              onClick={handleGeneratePlan}
+              className="generate-button"
               disabled={isLoading}
-            />
-            <button
-              onClick={isRecording ? stopRecording : startRecording}
-              className={`mic-button ${isRecording ? 'recording' : ''}`}
-              title={isRecording ? 'Stop recording' : 'Start recording'}
             >
-              {isRecording ? <MicOff size={20} /> : <Mic size={20} />}
+              {isLoading ? 'Generating...' : 'Generate Plan'}
             </button>
           </div>
-          <button 
-            onClick={handleGeneratePlan}
-            className="generate-button"
-            disabled={isLoading}
-          >
-            {isLoading ? 'Generating...' : 'Generate Plan'}
-          </button>
         </div>
       </div>
     </div>

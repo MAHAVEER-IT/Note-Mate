@@ -110,31 +110,106 @@ body {
   overflow: hidden;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
   .note {
-    width: 160px;
-    min-height: 120px;
+    width: 180px;
+    min-height: 130px;
   }
 
   .note-content {
-    height: 80px;
-    font-size: 0.9rem;
-  }
-
-  .note-header {
-    font-size: 0.9rem;
-  }
-
-  .note-header button {
-    padding: 0.25rem;
-    font-size: 0.9rem;
+    height: 90px;
+    font-size: 0.95rem;
   }
 
   .add-note-btn {
-    width: 50px;
+    width: 55px;
+    height: 55px;
+    bottom: 25px;
+    right: 25px;
+    font-size: 26px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .note {
+    width: 150px;
+    min-height: 110px;
+    padding: 0.75rem;
+  }
+
+  .note-content {
+    height: 70px;
+    font-size: 0.85rem;
+  }
+
+  .note-header {
+    font-size: 0.85rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .note-header button {
+    padding: 0.2rem;
+    font-size: 0.85rem;
+  }
+
+  .add-note-btn {
+    width: 45px;
+    height: 45px;
+    bottom: 15px;
+    right: 15px;
+    font-size: 22px;
+  }
+
+  .note:hover {
+    transform: scale(1.01);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .note {
+    width: 130px;
+    min-height: 100px;
+    padding: 0.6rem;
+  }
+
+  .note-content {
+    height: 60px;
+    font-size: 0.8rem;
+  }
+
+  .note-header {
+    font-size: 0.8rem;
+  }
+
+  .note-header button {
+    padding: 0.15rem;
+    font-size: 0.8rem;
+  }
+
+  .add-note-btn {
+    width: 40px;
+    height: 40px;
+    bottom: 10px;
+    right: 10px;
+    font-size: 20px;
+  }
+}
+
+@media screen and (max-height: 480px) and (orientation: landscape) {
+  .note {
+    width: 140px;
+    min-height: 90px;
+  }
+
+  .note-content {
     height: 50px;
-    bottom: 20px;
-    right: 20px;
-    font-size: 24px;
+  }
+
+  .add-note-btn {
+    width: 35px;
+    height: 35px;
+    bottom: 10px;
+    right: 10px;
+    font-size: 18px;
   }
 }
