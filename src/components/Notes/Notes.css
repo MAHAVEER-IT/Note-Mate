@@ -18,7 +18,7 @@
   width: 100%;
   min-width: 300px;
   max-width: 400px;
-  height: 100%;
+  height: 250px;
   background-color: white;
   border-radius: 0.75rem;
   padding: 1.25rem;
@@ -29,6 +29,7 @@
   position: relative;
   transform-origin: center;
   animation: fadeIn 0.3s ease-in-out;
+  overflow: hidden;
 }
 
 .note:hover {
@@ -89,10 +90,27 @@
 .note-content {
   color: #4b5563;
   font-size: 1rem;
-  line-height: 1.0;
-  column-gap: 100px;
+  line-height: 1.3;
   white-space: pre-wrap;
   word-break: break-word;
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  -ms-overflow-style: none;
+  padding: 0 0.5rem;
+}
+
+.note-content::-webkit-scrollbar {
+  width: 4px;
+}
+
+.note-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.note-content::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
 }
 
 .note-timestamp {
@@ -217,6 +235,7 @@
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
+  z-index: 1000;
 }
 
 .add-note-button:hover {
@@ -401,27 +420,121 @@
 @media screen and (max-width: 768px) {
   .notes-grid {
     grid-template-columns: 1fr;
-    gap: 1rem;
-    padding: 1rem;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    width: 100%;
+    max-width: none;
+    margin: 0;
   }
 
   .note {
-    min-width: unset;
-  }
-
-  .modal {
-    width: 95%;
-    margin: 0.5rem;
-  }
-
-  .add-note-button {
-    bottom: 1rem;
-    right: 1rem;
-    width: 3rem;
-    height: 3rem;
+    min-width: 100%;
+    max-width: none;
+    width: 100%;
+    height: 280px;
+    padding: 1rem;
+    margin: 0;
+    border-radius: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
   }
 
   .note-wrapper {
-    height: 10px;
+    height: 280px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .note-header {
+    margin-bottom: 0.75rem;
+    flex-shrink: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .modal {
+    width: 100%;
+    margin: 0;
+    height: 100%;
+    border-radius: 0;
+  }
+
+  .add-note-button {
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+
+  .note-content {
+    font-size: 1rem;
+    line-height: 1.4;
+    margin-top: 0.5rem;
+    padding: 0 0.5rem;
+    flex: 1;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    -ms-overflow-style: none;
+    margin-bottom: 3rem;
+  }
+
+  .note-content::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .note-content::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .note-content::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+  }
+
+  .note-title {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    padding: 0 0.5rem;
+    flex-shrink: 0;
+    max-width: 85%;
+  }
+
+  .note-timestamp {
+    font-size: 0.8rem;
+    position: absolute;
+    bottom: 0.75rem;
+    right: 1rem;
+    margin: 0;
+    padding: 0;
+  }
+
+  .note-actions {
+    position: absolute;
+    bottom: 0.5rem;
+    left: 1rem;
+    margin: 0;
+    padding: 0;
+    gap: 1.25rem;
+    display: flex;
+    align-items: center;
+    background: transparent;
+  }
+
+  .action-button {
+    padding: 0.4rem;
+    font-size: 1.1rem;
+    color: #555;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .note:hover {
+    transform: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
 }
