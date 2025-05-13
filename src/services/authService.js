@@ -2,12 +2,8 @@ import axios from 'axios';
 
 const API_URL = 'https://note-mate-backend.onrender.com/api/auth';
 
-export const register = async (username, email, password) => {
-    const response = await axios.post(`${API_URL}/register`, {
-        username,
-        email,
-        password
-    });
+export const register = async (userData) => {
+    const response = await axios.post(`${API_URL}/register`, userData);
     if (response.data) {
         localStorage.setItem('user', JSON.stringify(response.data));
     }

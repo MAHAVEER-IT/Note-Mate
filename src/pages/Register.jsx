@@ -26,8 +26,11 @@ function Register() {
         setError("All fields are required");
         setIsLoading(false);
         return;
-      }
-      const response = await AuthService.register({ email, password, username });
+      }      const response = await AuthService.register({
+        username,
+        email,
+        password
+      });
       if (response) {
         navigate("/login");
       }
