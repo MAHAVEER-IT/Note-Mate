@@ -8,7 +8,7 @@ const LandingPage = () => {
 
   return (
     <div className="landing-page">
-      {/* Hero Section */}
+      {/* Hero Section more*/}
       <section className="hero-section">
         <div className="hero-content">
           <h1>Organize Your Thoughts with <span className="highlight">Note-Mate</span></h1>
