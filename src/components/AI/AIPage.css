@@ -500,7 +500,7 @@
 /* Fix for Android Chrome viewport height issues */
 @supports (-webkit-appearance: none) {
   .ai-page {
-    min-height: fill-available;
+    height: 100vh;
     min-height: -webkit-fill-available;
   }
 }

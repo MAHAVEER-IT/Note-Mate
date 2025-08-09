@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import './LandingPage.css';
 import noteMateImg from '../../assets/images/Notes.png';
+import './LandingPage.css';
 
 const LandingPage = () => {
   const navigate = useNavigate();
