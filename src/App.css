@@ -34,6 +34,8 @@ body {
   min-height: 100vh;
   transition: background 0.3s ease;
   background: var(--theme-background);
+  overflow-y: auto; /* Allow vertical scrolling */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
 .home-page {

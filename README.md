@@ -2,7 +2,7 @@
 
 Note-Mate is a comprehensive note-taking and productivity application that helps users organize their thoughts, manage tasks, and create AI-generated study plans. Built with React and Node.js, it offers a full-stack solution for personal productivity management.
 
-![Note-Mate Logo](./public/notemate.png)
+<img src="public/notemate.png" alt="Note Mate Logo" width="100" height="100"/>
 
 ## Features
 

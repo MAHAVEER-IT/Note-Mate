@@ -15,8 +15,11 @@ export function AuthProvider({ children }) {
         setUser(currentUser);
         setLoading(false);
 
-        // Redirect to login if no user and not already on auth pages
-        if (!currentUser && !location.pathname.match(/\/(login|register)/)) {
+        // Redirect to login if no user and not on auth pages or landing page
+        if (!currentUser && 
+            !location.pathname.match(/\/(login|register)/) && 
+            location.pathname !== '/' && 
+            !location.pathname.match(/^\/\?(.*)$/)) {
             navigate('/login');
         }
     }, [navigate, location]);
