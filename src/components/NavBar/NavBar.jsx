@@ -4,13 +4,15 @@ import { Search, Bell, User, FileText, Feather, Cpu, Settings, Archive } from 'l
 import './NavBar.css';
 import * as AuthService from '../../services/authService';
 import { useNotes } from '../../context/NotesContext';
+import { useTheme } from '../../context/ThemeContext';
 import RemindersModal from '../Modals/RemindersModal';
 
 function NavBar({ activeTab, setActiveTab }) {
   const navigate = useNavigate();
   const user = AuthService.getCurrentUser();
   const [showReminders, setShowReminders] = useState(false);
-  const { notes, archivedNotes } = useNotes();  // Add archivedNotes from useNotes
+  const { notes, archivedNotes } = useNotes();
+  const { theme } = useTheme();
 
   const handleLogout = () => {
     AuthService.logout();
@@ -31,7 +33,7 @@ function NavBar({ activeTab, setActiveTab }) {
 
   return (
     <>
-      <nav className="navbar">
+      <nav className={`navbar theme-${theme}`}>
         <div className="navbar-left">
           <div className="nav-tabs">
             <button 

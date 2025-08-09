@@ -1,5 +1,5 @@
 /* components/StickyNote.css */
-.note {
+.sticky-note {
   position: absolute;
   padding: 1rem;
   width: 200px;
@@ -14,25 +14,77 @@
   -webkit-user-select: none;
   pointer-events: auto;
   z-index: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
-.note-container {
+.sticky-note-container {
   position: fixed;
   top: 60px;
   left: 0;
   right: 0;
   bottom: 0;
   pointer-events: none;
+  width: 100%;
+  height: calc(100% - 60px);
+  overflow: hidden;
 }
 
-.note-header {
+.sticky-note__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 0.5rem;
+  width: 100%;
+  flex-shrink: 0;
 }
 
-.note-content {
+/* Button styles */
+.sticky-note__btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s, transform 0.1s;
+  margin-left: 5px;
+  padding: 0;
+}
+
+.sticky-note__btn svg {
+  transition: transform 0.2s;
+}
+
+.sticky-note__btn--color {
+  color: #555;
+}
+
+.sticky-note__btn--color:hover, 
+.sticky-note__btn--color:focus {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.sticky-note__btn--color:hover svg, 
+.sticky-note__btn--color:focus svg {
+  transform: rotate(45deg);
+}
+
+.sticky-note__btn--delete {
+  color: #888;
+}
+
+.sticky-note__btn--delete:hover, 
+.sticky-note__btn--delete:focus {
+  background-color: rgba(220, 53, 69, 0.1);
+  color: #dc3545;
+}
+
+.sticky-note__content {
   width: 100%;
   height: 100px;
   border: none;
@@ -40,176 +92,271 @@
   resize: none;
   font-size: 1rem;
   outline: none;
+  flex-grow: 1;
+  min-height: 60px;
+  overflow-y: auto;
+  font-family: inherit;
+  line-height: 1.4;
 }
 
-.note:hover {
+.sticky-note:hover {
   transform: scale(1.02);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
 }
 
-.note.dragging {
+.sticky-note--dragging {
   cursor: grabbing;
   opacity: 0.9;
   transform: scale(1.02);
   transition: transform 0.1s ease-out, opacity 0.1s ease-out;
   z-index: 1000;
+  touch-action: none;
 }
 
-.note:active {
+.sticky-note:active {
   cursor: grabbing;
+  touch-action: none;
 }
 
-/* Color styles with more vibrant colors and better opacity */
-.note.yellow { background-color: rgba(254, 240, 138, 0.95); }
-.note.pink { background-color: rgba(251, 207, 232, 0.95); }
-.note.green { background-color: rgba(187, 247, 208, 0.95); }
-.note.blue { background-color: rgba(191, 219, 254, 0.95); }
-.note.purple { background-color: rgba(221, 214, 254, 0.95); }
-.note.red { background-color: rgba(254, 202, 202, 0.95); }
-.note.indigo { background-color: rgba(199, 210, 254, 0.95); }
+/* Improved color styles with more vibrant colors and better opacity */
+.sticky-note--yellow { background-color: rgba(254, 240, 138, 0.95); }
+.sticky-note--pink { background-color: rgba(251, 207, 232, 0.95); }
+.sticky-note--green { background-color: rgba(187, 247, 208, 0.95); }
+.sticky-note--blue { background-color: rgba(191, 219, 254, 0.95); }
+.sticky-note--purple { background-color: rgba(221, 214, 254, 0.95); }
+.sticky-note--red { background-color: rgba(254, 202, 202, 0.95); }
+.sticky-note--indigo { background-color: rgba(199, 210, 254, 0.95); }
 
 /* Add hover effects for each color */
-.note.yellow:hover { background-color: rgba(254, 240, 138, 1); }
-.note.pink:hover { background-color: rgba(251, 207, 232, 1); }
-.note.green:hover { background-color: rgba(187, 247, 208, 1); }
-.note.blue:hover { background-color: rgba(191, 219, 254, 1); }
-.note.purple:hover { background-color: rgba(221, 214, 254, 1); }
-.note.red:hover { background-color: rgba(254, 202, 202, 1); }
-.note.indigo:hover { background-color: rgba(199, 210, 254, 1); }
+.sticky-note--yellow:hover { background-color: rgba(254, 240, 138, 1); }
+.sticky-note--pink:hover { background-color: rgba(251, 207, 232, 1); }
+.sticky-note--green:hover { background-color: rgba(187, 247, 208, 1); }
+.sticky-note--blue:hover { background-color: rgba(191, 219, 254, 1); }
+.sticky-note--purple:hover { background-color: rgba(221, 214, 254, 1); }
+.sticky-note--red:hover { background-color: rgba(254, 202, 202, 1); }
+.sticky-note--indigo:hover { background-color: rgba(199, 210, 254, 1); }
 
-.add-note-btn {
+.sticky-note__add-btn {
   position: fixed;
-  bottom: 30px;
-  right: 30px;
-  width: 60px;
-  height: 60px;
+  bottom: clamp(15px, 4vw, 30px);
+  right: clamp(15px, 4vw, 30px);
+  width: clamp(45px, 12vw, 60px);
+  height: clamp(45px, 12vw, 60px);
   border-radius: 50%;
-  font-size: 30px;
+  font-size: clamp(20px, 5vw, 30px);
   background-color: #c180ea;
   color: white;
   border: none;
   cursor: pointer;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
-.add-note-btn:hover {
+.sticky-note__add-btn:hover {
   transform: scale(1.1);
+  background-color: #b06cd8;
+}
+
+.sticky-note__add-btn:active {
+  transform: scale(0.95);
+  background-color: #a65ad0;
 }
 
 body {
   overflow: hidden;
   margin: 0;
+  min-height: -webkit-fill-available;
   min-height: 100vh;
 }
 
-.sticky-notes-container {
+.sticky-notes__wrapper {
   position: fixed;
   top: 60px;
   left: 0;
   right: 0;
   bottom: 0;
   overflow: hidden;
+  width: 100%;
+  height: calc(100% - 60px);
+  touch-action: manipulation;
 }
 
+/* Responsive Breakpoints */
 @media screen and (max-width: 1024px) {
-  .note {
+  .sticky-note {
     width: 180px;
     min-height: 130px;
+    padding: 0.85rem;
   }
 
-  .note-content {
-    height: 90px;
+  .sticky-note__content {
+    height: 80px;
     font-size: 0.95rem;
-  }
-
-  .add-note-btn {
-    width: 55px;
-    height: 55px;
-    bottom: 25px;
-    right: 25px;
-    font-size: 26px;
   }
 }
 
+/* Tablets */
 @media screen and (max-width: 768px) {
-  .note {
-    width: 150px;
-    min-height: 110px;
+  .sticky-note {
+    width: 160px;
+    min-height: 120px;
     padding: 0.75rem;
   }
 
-  .note-content {
+  .sticky-note__content {
     height: 70px;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
   }
 
-  .note-header {
-    font-size: 0.85rem;
+  .sticky-note__header {
+    font-size: 0.9rem;
     margin-bottom: 0.3rem;
   }
 
-  .note-header button {
-    padding: 0.2rem;
-    font-size: 0.85rem;
+  .sticky-note__btn {
+    width: 26px;
+    height: 26px;
+  }
+  
+  .sticky-note__btn svg {
+    width: 14px;
+    height: 14px;
   }
 
-  .add-note-btn {
-    width: 45px;
-    height: 45px;
-    bottom: 15px;
-    right: 15px;
-    font-size: 22px;
+  /* Larger phones */
+  @media screen and (max-width: 576px) {
+    .sticky-note {
+      width: 140px;
+      min-height: 110px;
+      padding: 0.7rem;
+    }
+  
+    .sticky-note__content {
+      height: 65px;
+      font-size: 0.85rem;
+    }
+    
+    .sticky-note:hover {
+      transform: scale(1.01);
+    }
+  }
+  
+  /* Small phones */
+  @media screen and (max-width: 480px) {
+    .sticky-note {
+      width: 130px;
+      min-height: 100px;
+      padding: 0.6rem;
+    }
+  
+    .sticky-note__content {
+      height: 60px;
+      font-size: 0.8rem;
+    }
+  
+    .sticky-note__header {
+      font-size: 0.8rem;
+      margin-bottom: 0.25rem;
+    }
+  
+    .sticky-note__btn {
+      width: 24px;
+      height: 24px;
+    }
+    
+    .sticky-note__btn svg {
+      width: 12px;
+      height: 12px;
+    }
+  }
+  
+  /* Extra small phones */
+  @media screen and (max-width: 360px) {
+    .sticky-note {
+      width: 110px;
+      min-height: 90px;
+      padding: 0.5rem;
+    }
+    
+    .sticky-note__content {
+      height: 50px;
+      font-size: 0.75rem;
+      line-height: 1.3;
+    }
+    
+    .sticky-note__btn {
+      width: 22px;
+      height: 22px;
+    }
+    
+    .sticky-note__btn svg {
+      width: 11px;
+      height: 11px;
+    }
   }
 
-  .note:hover {
-    transform: scale(1.01);
+  /* Landscape mode */
+  @media screen and (max-height: 480px) and (orientation: landscape) {
+    .sticky-note {
+      width: 140px;
+      min-height: 90px;
+      padding: 0.5rem;
+    }
+  
+    .sticky-note__content {
+      height: 50px;
+      font-size: 0.8rem;
+    }
+    
+    .sticky-note__header {
+      margin-bottom: 0.2rem;
+    }
   }
-}
-
-@media screen and (max-width: 480px) {
-  .note {
-    width: 130px;
-    min-height: 100px;
-    padding: 0.6rem;
+  
+  /* Touch-specific improvements */
+  @media (pointer: coarse) {
+    .sticky-note__btn {
+      min-width: 30px;
+      min-height: 30px;
+      margin: 0 2px;
+      /* Add a subtle background to make tapping easier */
+      background-color: rgba(0, 0, 0, 0.03);
+      border-radius: 50%;
+    }
+    
+    /* Enhance tap feedback */
+    .sticky-note__btn:active {
+      transform: scale(0.9);
+      transition: transform 0.1s;
+    }
+    
+    /* Slightly larger touch targets on mobile */
+    .sticky-note {
+      touch-action: manipulation;
+    }
+    
+    /* Better textarea handling for touch devices */
+    .sticky-note__content {
+      scroll-behavior: smooth;
+      padding: 4px;
+    }
   }
-
-  .note-content {
-    height: 60px;
-    font-size: 0.8rem;
+  
+  /* Safe area insets for modern devices with notches/punch holes */
+  @supports (padding: max(0px)) {
+    .sticky-note__add-btn {
+      bottom: max(15px, env(safe-area-inset-bottom, 15px));
+      right: max(15px, env(safe-area-inset-right, 15px));
+    }
+    
+    .sticky-notes__wrapper {
+      padding-bottom: env(safe-area-inset-bottom, 0);
+      padding-left: env(safe-area-inset-left, 0);
+      padding-right: env(safe-area-inset-right, 0);
+    }
   }
-
-  .note-header {
-    font-size: 0.8rem;
-  }
-
-  .note-header button {
-    padding: 0.15rem;
-    font-size: 0.8rem;
-  }
-
-  .add-note-btn {
-    width: 40px;
-    height: 40px;
-    bottom: 10px;
-    right: 10px;
-    font-size: 20px;
-  }
-}
-
-@media screen and (max-height: 480px) and (orientation: landscape) {
-  .note {
-    width: 140px;
-    min-height: 90px;
-  }
-
-  .note-content {
-    height: 50px;
-  }
-
-  .add-note-btn {
-    width: 35px;
-    height: 35px;
-    bottom: 10px;
-    right: 10px;
-    font-size: 18px;
-  }
-}

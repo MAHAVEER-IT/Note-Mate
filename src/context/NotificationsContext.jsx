@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
+import React, { createContext, useContext, useState, useCallback, useEffect, useMemo } from 'react';
 import { useNotes } from './NotesContext';
 
 const NotificationsContext = createContext();
@@ -46,8 +46,15 @@ export function NotificationsProvider({ children }) {
     setNotifications(prev => prev.filter(notification => notification.id !== id));
   }, []);
 
+  // Memoize context value to prevent unnecessary renders
+  const contextValue = useMemo(() => ({
+    notifications,
+    addNotification,
+    removeNotification
+  }), [notifications, addNotification, removeNotification]);
+
   return (
-    <NotificationsContext.Provider value={{ notifications, addNotification, removeNotification }}>
+    <NotificationsContext.Provider value={contextValue}>
       {children}
     </NotificationsContext.Provider>
   );

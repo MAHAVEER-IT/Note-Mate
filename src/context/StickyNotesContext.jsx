@@ -34,7 +34,6 @@ export function StickyNoteProvider({ children }) {
       try {
         const fetchedNotes = await fetchStickyNotes();
         setNotes(fetchedNotes);
-        console.log('Initial notes fetched:', fetchedNotes); // Debug log
       } catch (err) {
         setError(err.message);
         console.error('Fetch error:', err);
@@ -49,10 +48,8 @@ export function StickyNoteProvider({ children }) {
     try {
       setLoading(true);
       const newNote = await createStickyNote({ x, y, color, content: '' });
-      console.log('New note from API:', newNote); // Debug log
       setNotes((prev) => {
         const updatedNotes = [...prev, { ...newNote }]; // Spread to ensure new object
-        console.log('Updated notes state:', updatedNotes); // Debug log
         return updatedNotes;
       });
       setError(null);
@@ -90,8 +87,7 @@ export function StickyNoteProvider({ children }) {
   const debouncedUpdateNote = useCallback(
     debounce(async (id, updatedFields) => {
       try {
-        const updatedNote = await updateStickyNote(id, updatedFields);
-        console.log('Note updated on server:', updatedNote);
+        await updateStickyNote(id, updatedFields);
       } catch (err) {
         console.error('Error updating note:', err);
         setError(err.message);

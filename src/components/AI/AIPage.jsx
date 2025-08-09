@@ -4,7 +4,6 @@ import { Calendar, History, X, Mic, MicOff } from 'lucide-react';
 import { saveSchedule, getSchedules } from '../../services/aiScheduleService';
 import { useNavigate } from 'react-router-dom';
 import './AIPage.css';
-
 const AIPage = () => {
   const { generateStudyPlan, studyPlan, isLoading, error, setExistingPlan } = useAI();
   const navigate = useNavigate();
@@ -13,6 +12,7 @@ const AIPage = () => {
   const [scheduleHistory, setScheduleHistory] = useState([]);
   const [isRecording, setIsRecording] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
+
   const recognition = useMemo(() => {
     if (window.SpeechRecognition || window.webkitSpeechRecognition) {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -24,13 +24,12 @@ const AIPage = () => {
     }
     return null;
   }, []);
-
+  
   useEffect(() => {
     if (showHistory) {
       loadScheduleHistory();
     }
   }, [showHistory]);
-
   const loadScheduleHistory = async () => {
     try {
       const history = await getSchedules();
@@ -39,12 +38,10 @@ const AIPage = () => {
       console.error('Error loading history:', error);
     }
   };
-
   const handleGeneratePlan = async () => {
     setHasStarted(true);
     await generateStudyPlan(prompt || 'Give me a study plan for tomorrow');
   };
-
   const handleSaveSchedule = async () => {
     if (studyPlan) {
       try {
@@ -61,45 +58,36 @@ const AIPage = () => {
       }
     }
   };
-
   const loadHistorySchedule = (historicalSchedule) => {
     navigate(`/ai-history/${historicalSchedule._id}`);
   };
-
   const startRecording = () => {
     if (!recognition) {
       console.error('Speech recognition not supported');
       return;
     }
-
     recognition.onstart = () => {
       setIsRecording(true);
     };
-
     recognition.onresult = (event) => {
       const transcript = event.results[0][0].transcript;
       setPrompt(transcript);
     };
-
     recognition.onerror = (event) => {
       console.error('Speech recognition error:', event.error);
       setIsRecording(false);
     };
-
     recognition.onend = () => {
       setIsRecording(false);
     };
-
     recognition.start();
   };
-
   const stopRecording = () => {
     if (recognition) {
       recognition.stop();
       setIsRecording(false);
     }
   };
-
   return (
     <div className="ai-page-wrapper">
       <div className="ai-page">
@@ -131,26 +119,23 @@ const AIPage = () => {
             </div>
           </div>
         )}
-
         <div className={`ai-interface ${!hasStarted && !studyPlan ? 'with-welcome' : ''}`}>
-          <button 
+          <button
             className="history-corner-button"
             onClick={() => setShowHistory(!showHistory)}
           >
             <History size={24} />
           </button>
-
           {error && (
             <div className="error-message">
               Error: {error}. Please try again.
             </div>
           )}
-
           {studyPlan && !error && (
             <div className="study-plan">
               <div className="study-plan-header">
                 <h2>Your Study Schedule</h2>
-                <button 
+                <button
                   className="save-button"
                   onClick={handleSaveSchedule}
                 >
@@ -176,13 +161,12 @@ const AIPage = () => {
               </div>
             </div>
           )}
-
           {showHistory && (
             <div className="history-modal">
               <div className="history-content">
                 <div className="history-header">
                   <h3>Schedule History</h3>
-                  <button 
+                  <button
                     className="close-button"
                     onClick={() => setShowHistory(false)}
                   >
@@ -191,7 +175,7 @@ const AIPage = () => {
                 </div>
                 <div className="history-list">
                   {scheduleHistory.map((item) => (
-                    <div 
+                    <div
                       key={item._id}
                       className="history-item"
                       onClick={() => loadHistorySchedule(item)}
@@ -206,7 +190,6 @@ const AIPage = () => {
               </div>
             </div>
           )}
-
           <div className="ai-input-section">
             <div className="input-with-mic">
               <input
@@ -225,7 +208,7 @@ const AIPage = () => {
                 {isRecording ? <MicOff size={20} /> : <Mic size={20} />}
               </button>
             </div>
-            <button 
+            <button
               onClick={handleGeneratePlan}
               className="generate-button"
               disabled={isLoading}
@@ -238,5 +221,4 @@ const AIPage = () => {
     </div>
   );
 };
-
 export default AIPage;

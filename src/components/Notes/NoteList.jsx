@@ -1,6 +1,7 @@
 import React from 'react';
 import NoteCard from './NoteCard';
 import { useNotes } from '../../context/NotesContext';
+import { FileText, Plus } from 'lucide-react';
 import './Notes.css';
 
 function NoteList({ isArchiveView = false }) {
@@ -24,18 +25,31 @@ function NoteList({ isArchiveView = false }) {
   }, []);
 
   if (isLoading) {
-    return <div className="empty-notes">Loading...</div>;
+    return (
+      <div className="empty-notes">
+        <div className="loading-spinner"></div>
+        <p>Loading your notes...</p>
+      </div>
+    );
   }
 
   if (!displayNotes.length) {
     return (
       <div className="empty-notes">
-        <i className="notes-icon"></i>
-        <p>{isArchiveView ? 'No archived notes' : 'No notes yet. Click the + button to add one!'}</p>
+        <FileText size={40} className="notes-icon" />
+        <p>
+          {isArchiveView 
+            ? 'No archived notes found' 
+            : 'No notes yet. Click the + button to create your first note!'}
+        </p>
+        {!isArchiveView && (
+          <div className="empty-notes-hint">
+            <Plus size={18} /> Create notes to keep track of your ideas, tasks, and more
+          </div>
+        )}
       </div>
     );
   }
-
 
   return (
     <div className="notes-grid">

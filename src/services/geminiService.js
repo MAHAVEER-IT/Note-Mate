@@ -3,11 +3,8 @@ const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-
 
 export const generateStudyPlan = async (prompt) => {
   try {
-    const formattedPrompt = `Create a structured study schedule for ${prompt}. Format the response as time slots and activities only, starting from 7:00 AM until 9:30 PM. Example format:
-7:00 AM
-Morning Routine
-8:00 AM
-Study Topic 1`;
+    // Simplified formatted prompt
+    const formattedPrompt = `Create a structured study schedule for ${prompt}. Format the response as time slots and activities only, starting from 7:00 AM until 9:30 PM. Each time should be on its own line, followed by the activity on the next line.`;
 
     const response = await fetch(`${API_URL}?key=${GEMINI_API_KEY}`, {
       method: 'POST',

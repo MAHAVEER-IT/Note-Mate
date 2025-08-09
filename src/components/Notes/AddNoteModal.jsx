@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { X } from 'lucide-react';
 import './Notes.css';
 
@@ -6,6 +6,9 @@ function AddNoteModal({ onClose, onSave }) {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [selectedColor, setSelectedColor] = useState('note-yellow');
+  const [error, setError] = useState('');
+  const modalRef = useRef(null);
+  const titleInputRef = useRef(null);
 
   const colors = [
     { class: 'note-yellow', label: 'Yellow' },
@@ -15,10 +18,36 @@ function AddNoteModal({ onClose, onSave }) {
     { class: 'note-purple', label: 'Purple' }
   ];
 
+  // Focus on title input when modal opens
+  useEffect(() => {
+    if (titleInputRef.current) {
+      setTimeout(() => {
+        titleInputRef.current.focus();
+      }, 300); // Small delay to ensure animation completes
+    }
+  }, []);
+
+  // Handle mobile keyboard adjustments
+  useEffect(() => {
+    const handleResize = () => {
+      // Adjust modal position based on viewport height if keyboard is open
+      if (modalRef.current && window.innerHeight < 500) {
+        modalRef.current.style.height = 'auto';
+        modalRef.current.style.maxHeight = '90vh';
+      } else if (modalRef.current) {
+        modalRef.current.style.height = '';
+        modalRef.current.style.maxHeight = '';
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!content.trim()) {
-      alert('Note content cannot be empty!');
+      setError('Note content cannot be empty!');
       return;
     }
 
@@ -33,8 +62,8 @@ function AddNoteModal({ onClose, onSave }) {
   };
 
   return (
-    <div className="modal-overlay">
-      <div className="modal">
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal" ref={modalRef} onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <h3>Add New Note</h3>
           <button className="close-button" onClick={onClose}>
@@ -45,18 +74,25 @@ function AddNoteModal({ onClose, onSave }) {
           <div className="modal-body">
             <input
               type="text"
-              placeholder="Title"
+              placeholder="Enter title..."
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               className="modal-input"
+              ref={titleInputRef}
             />
             <textarea
               placeholder="Write your note here..."
               value={content}
-              onChange={(e) => setContent(e.target.value)}
+              onChange={(e) => {
+                setContent(e.target.value);
+                if (e.target.value.trim()) {
+                  setError('');
+                }
+              }}
               className="modal-textarea"
               rows="5"
             />
+            {error && <div className="error-message">{error}</div>}
             <div className="color-picker">
               <label>Choose color:</label>
               <div className="color-options">
@@ -73,7 +109,7 @@ function AddNoteModal({ onClose, onSave }) {
             </div>
           </div>
           <div className="modal-footer">
-            <button type="submit" className="save-button">
+            <button type="submit" className="note-save-button">
               Save Note
             </button>
           </div>

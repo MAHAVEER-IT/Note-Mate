@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo, useCallback } from 'react';
 import noteService from '../services/notesService';
 import {getCurrentUser} from '../services/authService';
 
@@ -11,7 +11,7 @@ export function NotesProvider({ children }) {
   
   const token = getCurrentUser()?.token; 
 
-  const fetchNotes = async () => {
+  const fetchNotes = useCallback(async () => {
     if (!token) return;
     setIsLoading(true);
     try {
@@ -33,7 +33,7 @@ export function NotesProvider({ children }) {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [token]);
 
   useEffect(() => {
     fetchNotes();
@@ -43,18 +43,18 @@ export function NotesProvider({ children }) {
       setNotes([]);
       setArchivedNotes([]);
     };
-  }, [token]);
+  }, [fetchNotes]);
 
-  const addNote = async (newNote) => {
+  const addNote = useCallback(async (newNote) => {
     try {
       const savedNote = await noteService.createNote(newNote, token);
       setNotes(prev => [savedNote, ...prev]);
     } catch (error) {
       console.error('Failed to add note:', error);
     }
-  };
+  }, [token]);
 
-  const deleteNote = async (id, isArchived = false) => {
+  const deleteNote = useCallback(async (id, isArchived = false) => {
     if (window.confirm('Are you sure you want to delete this note?')) {
       try {
         await noteService.deleteNote(id, token);
@@ -67,36 +67,36 @@ export function NotesProvider({ children }) {
         console.error('Failed to delete note:', error);
       }
     }
-  };
+  }, [token]);
 
-  const archiveNote = async (id) => {
+  const archiveNote = useCallback(async (id) => {
     try {
       await noteService.archiveNote(id, token);
       fetchNotes();
     } catch (error) {
       console.error('Failed to archive note:', error);
     }
-  };
+  }, [token, fetchNotes]);
 
-  const unarchiveNote = async (id) => {
+  const unarchiveNote = useCallback(async (id) => {
     try {
       await noteService.unarchiveNote(id, token);
       fetchNotes();
     } catch (error) {
       console.error('Failed to unarchive note:', error);
     }
-  };
+  }, [token, fetchNotes]);
 
-  const setReminder = async (id, reminderDate, isArchived = false) => {
+  const setReminder = useCallback(async (id, reminderDate, isArchived = false) => {
     try {
       await noteService.setReminder(id, reminderDate, token);
       fetchNotes();
     } catch (error) {
       console.error('Failed to set reminder:', error);
     }
-  };
+  }, [token, fetchNotes]);
 
-  const updateNote = async (id, updatedData) => {
+  const updateNote = useCallback(async (id, updatedData) => {
     try {
       const updatedNote = await noteService.updateNote(id, updatedData, token);
       setNotes(prev => prev.map(note => 
@@ -105,21 +105,35 @@ export function NotesProvider({ children }) {
     } catch (error) {
       console.error('Failed to update note:', error);
     }
-  };
+  }, [token]);
+
+  // Memoize context value to prevent unnecessary renders
+  const contextValue = useMemo(() => ({ 
+    notes, 
+    archivedNotes, 
+    addNote, 
+    deleteNote, 
+    archiveNote, 
+    unarchiveNote, 
+    setReminder,
+    updateNote,
+    fetchNotes,
+    isLoading
+  }), [
+    notes, 
+    archivedNotes, 
+    addNote, 
+    deleteNote, 
+    archiveNote, 
+    unarchiveNote, 
+    setReminder,
+    updateNote,
+    fetchNotes,
+    isLoading
+  ]);
 
   return (
-    <NotesContext.Provider value={{ 
-      notes, 
-      archivedNotes, 
-      addNote, 
-      deleteNote, 
-      archiveNote, 
-      unarchiveNote, 
-      setReminder,
-      updateNote,
-      fetchNotes,
-      isLoading
-    }}>
+    <NotesContext.Provider value={contextValue}>
       {children}
     </NotesContext.Provider>
   );

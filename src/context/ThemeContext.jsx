@@ -38,12 +38,14 @@ export const themes = {
 export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState(() => {
     const savedTheme = localStorage.getItem('theme');
-    return savedTheme || 'default';
+    // Validate that the saved theme exists in our themes object
+    return themes[savedTheme] ? savedTheme : 'default';
   });
 
   useEffect(() => {
     localStorage.setItem('theme', theme);
-    const themeStyles = themes[theme];
+    // Use default theme as fallback if the specified theme doesn't exist
+    const themeStyles = themes[theme] || themes.default;
     document.documentElement.style.setProperty('--theme-background', themeStyles.background);
     document.documentElement.style.setProperty('--theme-text', themeStyles.text);
     document.documentElement.style.setProperty('--theme-card', themeStyles.card);

@@ -2,10 +2,8 @@ import React from 'react';
 import { X, AlertCircle, Info, CheckCircle, Bell } from 'lucide-react';
 import { useNotifications } from '../../context/NotificationsContext';
 import './NotificationsBar.css';
-
 function NotificationsBar() {
   const { notifications, removeNotification } = useNotifications();
-
   const getIcon = (type) => {
     switch (type) {
       case 'error':
@@ -18,9 +16,7 @@ function NotificationsBar() {
         return <Info size={20} />;
     }
   };
-
   if (notifications.length === 0) return null;
-
   return (
     <div className="notifications-container">
       {notifications.map(notification => (
@@ -53,5 +49,4 @@ function NotificationsBar() {
     </div>
   );
 }
-
 export default NotificationsBar;

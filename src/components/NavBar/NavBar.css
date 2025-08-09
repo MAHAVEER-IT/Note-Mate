@@ -1,10 +1,22 @@
+:root {
+  /* Default theme values */
+  --nav-active-bg: #E0F7FA; 
+  --nav-active-color: #00897B;
+  --nav-hover-bg: #E0F2F1;
+  --nav-hover-color: #26A69A;
+  --nav-text: #555;
+  --notification-badge: #26A69A;
+  --nav-bg: #ffffff;
+}
+
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background-color: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: var(--nav-bg);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  border-radius: 0 0 12px 12px;
 }
 
 .nav-tabs {
@@ -20,20 +32,21 @@
   padding: 0.5rem 1rem;
   border: none;
   background: none;
-  color: #666;
+  color: var(--nav-text);
   cursor: pointer;
-  border-radius: 0.5rem;
+  border-radius: 0.75rem;
   transition: all 0.2s;
 }
 
 .nav-tab:hover {
-  background-color: #f5f5f5;
-  color: #8E54E9;
+  background-color: var(--nav-hover-bg);
+  color: var(--nav-hover-color);
 }
 
 .nav-tab.active {
-  background-color: #f0e7fe;
-  color: #8E54E9;
+  background-color: var(--nav-active-bg);
+  color: var(--nav-active-color);
+  font-weight: 600;
 }
 
 .nav-tab span {
@@ -53,12 +66,12 @@
   border: none;
   cursor: pointer;
   padding: 0.5rem;
-  border-radius: 0.5rem;
+  border-radius: 0.75rem;
   transition: background-color 0.2s;
 }
 
 .menu-button:hover {
-  background-color: #f5f5f5;
+  background-color: var(--nav-hover-bg);
 }
 
 .navbar-right {
@@ -72,13 +85,14 @@
   border: none;
   cursor: pointer;
   padding: 0.5rem;
-  border-radius: 0.5rem;
-  color: #666;
-  transition: background-color 0.2s;
+  border-radius: 0.75rem;
+  color: var(--nav-text);
+  transition: all 0.2s;
 }
 
 .icon-button:hover {
-  background-color: #f5f5f5;
+  background-color: var(--nav-hover-bg);
+  color: var(--nav-hover-color);
 }
 
 .user-profile {
@@ -86,12 +100,18 @@
   align-items: center;
   gap: 0.75rem;
   padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
+  border-radius: 1rem;
   position: relative;
+  background-color: #F5F5F5;
+  transition: all 0.2s;
+}
+
+.user-profile:hover {
+  background-color: var(--nav-hover-bg);
 }
 
 .username {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 500;
   color: #333;
 }
@@ -104,7 +124,7 @@
   position: absolute;
   top: -5px;
   right: -5px;
-  background-color: #ef4444;
+  background-color: var(--notification-badge);
   color: white;
   font-size: 12px;
   width: 18px;
@@ -114,28 +134,92 @@
   align-items: center;
   justify-content: center;
   font-weight: 600;
+  box-shadow: 0 2px 4px rgba(38, 166, 154, 0.3);
 }
 
 .logout-button {
   background: none;
   border: none;
-  color: #ef4444;
+  color: #FF5252;
   cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 0.25rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
   font-size: 0.9rem;
   font-weight: 500;
   transition: all 0.2s;
 }
 
 .logout-button:hover {
-  background-color: #fee2e2;
+  background-color: #FFEBEE;
+  color: #D32F2F;
+}
+
+/* Theme-specific styles */
+.navbar.theme-mint {
+  --nav-active-bg: #E0F7FA;
+  --nav-active-color: #00897B;
+  --nav-hover-bg: #E0F2F1;
+  --nav-hover-color: #26A69A;
+  --nav-text: #555;
+  --notification-badge: #26A69A;
+  --nav-bg: #ffffff;
+}
+
+.navbar.theme-lavender {
+  --nav-active-bg: #EDE7F6;
+  --nav-active-color: #7E57C2;
+  --nav-hover-bg: #F3E5F5;
+  --nav-hover-color: #9575CD;
+  --nav-text: #555;
+  --notification-badge: #9575CD;
+  --nav-bg: #ffffff;
+}
+
+.navbar.theme-peach {
+  --nav-active-bg: #FFF3E0;
+  --nav-active-color: #FF7043;
+  --nav-hover-bg: #FFF8E1;
+  --nav-hover-color: #FFA726;
+  --nav-text: #555;
+  --notification-badge: #FF7043;
+  --nav-bg: #ffffff;
+}
+
+.navbar.theme-sky {
+  --nav-active-bg: #E3F2FD;
+  --nav-active-color: #1E88E5;
+  --nav-hover-bg: #E1F5FE;
+  --nav-hover-color: #29B6F6;
+  --nav-text: #555;
+  --notification-badge: #29B6F6;
+  --nav-bg: #ffffff;
+}
+
+.navbar.theme-sunset {
+  --nav-active-bg: #FCE4EC;
+  --nav-active-color: #E91E63;
+  --nav-hover-bg: #FAFAFA;
+  --nav-hover-color: #F06292;
+  --nav-text: #555;
+  --notification-badge: #E91E63;
+  --nav-bg: #ffffff;
+}
+
+.navbar.theme-default {
+  --nav-active-bg: #E3F2FD;
+  --nav-active-color: #1976D2;
+  --nav-hover-bg: #E1F5FE;
+  --nav-hover-color: #039BE5;
+  --nav-text: #555;
+  --notification-badge: #039BE5;
+  --nav-bg: #ffffff;
 }
 
 @media screen and (max-width: 768px) {
   .navbar {
-    padding: 0.5rem;
+    padding: 0.75rem;
     flex-direction: column;
+    border-radius: 0;
   }
 
   .nav-tabs {
@@ -143,17 +227,19 @@
     overflow-x: auto;
     padding: 0.5rem 0;
     justify-content: flex-start;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+    /* Fix for cross-browser compatibility */
+    -ms-overflow-style: none;  /* Internet Explorer/Edge */
+    scrollbar-width: none;  /* Firefox */
   }
 
   .nav-tabs::-webkit-scrollbar {
-    display: none;
+    display: none;  /* Chrome, Safari, Opera */
   }
 
   .nav-tab {
     white-space: nowrap;
-    padding: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
   }
 
   .nav-tab span {
@@ -164,11 +250,14 @@
     width: 100%;
     justify-content: space-between;
     padding-top: 0.5rem;
+    border-top: 1px solid #E0F2F1;
+    margin-top: 0.5rem;
   }
 
   .user-profile {
     display: flex;
     padding: 0.5rem;
+    background-color: transparent;
   }
   
   .username {
