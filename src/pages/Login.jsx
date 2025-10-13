@@ -128,11 +128,6 @@ function Login() {
               </span>
             </div>
             
-            <div className="notes-app-forgot-password">
-              <a href="#" className="notes-app-link">
-                Forgot password?
-              </a>
-            </div>
             
             <button type="submit" className="notes-app-button" disabled={isLoading}>
               {isLoading ? <div className="spinner"></div> : "Sign In"}

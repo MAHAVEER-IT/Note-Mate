@@ -1,22 +1,63 @@
 /* components/StickyNote.css */
 .sticky-note {
   position: absolute;
-  padding: 1rem;
-  width: 200px;
-  min-height: 150px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  padding: 1.25rem;
+  width: 220px;
+  min-height: 180px;
+  border-radius: 12px;
+  box-shadow: 
+    0 2px 4px rgba(0,0,0,0.08),
+    0 4px 8px rgba(0,0,0,0.06),
+    0 8px 16px rgba(0,0,0,0.04);
   cursor: grab;
   will-change: transform;
   transform-origin: center;
-  transition: transform 0.1s ease-out;
-  user-select: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   -webkit-user-select: none;
+  user-select: none;
   pointer-events: auto;
   z-index: 1;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  position: relative;
+}
+
+/* Paper texture effect */
+.sticky-note::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 29px,
+      rgba(0, 0, 0, 0.02) 29px,
+      rgba(0, 0, 0, 0.02) 31px
+    );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Folded corner effect */
+.sticky-note::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 20px 20px 0;
+  border-color: transparent rgba(0, 0, 0, 0.08) transparent transparent;
+  z-index: 2;
 }
 
 .sticky-note-container {
@@ -35,82 +76,162 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
   width: 100%;
   flex-shrink: 0;
+  position: relative;
+  z-index: 3;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: rgba(0, 0, 0, 0.7);
+  letter-spacing: 0.3px;
+}
+
+.sticky-note__header span {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sticky-note__buttons {
+  display: flex;
+  gap: 0.25rem;
 }
 
 /* Button styles */
 .sticky-note__btn {
-  background: transparent;
-  border: none;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(0, 0, 0, 0.08);
   cursor: pointer;
-  width: 28px;
-  height: 28px;
-  border-radius: 4px;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background-color 0.2s, transform 0.1s;
-  margin-left: 5px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   padding: 0;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  position: relative;
+  z-index: 3;
 }
 
 .sticky-note__btn svg {
-  transition: transform 0.2s;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sticky-note__btn--pin {
+  color: #666;
+}
+
+.sticky-note__btn--pin:hover, 
+.sticky-note__btn--pin:focus {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.sticky-note__btn--pin.pinned {
+  background: rgba(255, 215, 0, 0.3);
+  color: #f59e0b;
+}
+
+.sticky-note__btn--pin.pinned svg {
+  transform: rotate(45deg);
 }
 
 .sticky-note__btn--color {
-  color: #555;
+  color: #666;
 }
 
 .sticky-note__btn--color:hover, 
 .sticky-note__btn--color:focus {
-  background-color: rgba(0, 0, 0, 0.05);
-}
-
-.sticky-note__btn--color:hover svg, 
-.sticky-note__btn--color:focus svg {
-  transform: rotate(45deg);
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px) rotate(180deg);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .sticky-note__btn--delete {
-  color: #888;
+  color: #999;
 }
 
 .sticky-note__btn--delete:hover, 
 .sticky-note__btn--delete:focus {
-  background-color: rgba(220, 53, 69, 0.1);
-  color: #dc3545;
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(239, 68, 68, 0.2);
+}
+
+.sticky-note__btn:active {
+  transform: translateY(0) scale(0.95);
 }
 
 .sticky-note__content {
   width: 100%;
-  height: 100px;
+  height: 110px;
   border: none;
   background: transparent;
   resize: none;
-  font-size: 1rem;
+  font-size: 0.95rem;
   outline: none;
   flex-grow: 1;
-  min-height: 60px;
+  min-height: 80px;
   overflow-y: auto;
-  font-family: inherit;
-  line-height: 1.4;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: rgba(0, 0, 0, 0.85);
+  position: relative;
+  z-index: 3;
+  padding: 0.25rem;
+}
+
+.sticky-note__content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sticky-note__content::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.02);
+  border-radius: 3px;
+}
+
+.sticky-note__content::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 3px;
+}
+
+.sticky-note__content::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.sticky-note__content::placeholder {
+  color: rgba(0, 0, 0, 0.3);
+  font-style: italic;
 }
 
 .sticky-note:hover {
-  transform: scale(1.02);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  transform: translateY(-4px) rotate(0.5deg);
+  box-shadow: 
+    0 4px 8px rgba(0,0,0,0.1),
+    0 8px 16px rgba(0,0,0,0.08),
+    0 16px 32px rgba(0,0,0,0.06);
 }
 
 .sticky-note--dragging {
   cursor: grabbing;
-  opacity: 0.9;
-  transform: scale(1.02);
-  transition: transform 0.1s ease-out, opacity 0.1s ease-out;
+  opacity: 0.95;
+  transform: scale(1.05) rotate(2deg);
+  transition: transform 0.2s ease-out, opacity 0.2s ease-out;
   z-index: 1000;
   touch-action: none;
+  box-shadow: 
+    0 8px 16px rgba(0,0,0,0.15),
+    0 16px 32px rgba(0,0,0,0.12),
+    0 24px 48px rgba(0,0,0,0.08);
 }
 
 .sticky-note:active {
@@ -118,53 +239,95 @@
   touch-action: none;
 }
 
-/* Improved color styles with more vibrant colors and better opacity */
-.sticky-note--yellow { background-color: rgba(254, 240, 138, 0.95); }
-.sticky-note--pink { background-color: rgba(251, 207, 232, 0.95); }
-.sticky-note--green { background-color: rgba(187, 247, 208, 0.95); }
-.sticky-note--blue { background-color: rgba(191, 219, 254, 0.95); }
-.sticky-note--purple { background-color: rgba(221, 214, 254, 0.95); }
-.sticky-note--red { background-color: rgba(254, 202, 202, 0.95); }
-.sticky-note--indigo { background-color: rgba(199, 210, 254, 0.95); }
+.sticky-note--pinned {
+  z-index: 10;
+  border: 2px solid rgba(245, 158, 11, 0.4);
+}
 
-/* Add hover effects for each color */
-.sticky-note--yellow:hover { background-color: rgba(254, 240, 138, 1); }
-.sticky-note--pink:hover { background-color: rgba(251, 207, 232, 1); }
-.sticky-note--green:hover { background-color: rgba(187, 247, 208, 1); }
-.sticky-note--blue:hover { background-color: rgba(191, 219, 254, 1); }
-.sticky-note--purple:hover { background-color: rgba(221, 214, 254, 1); }
-.sticky-note--red:hover { background-color: rgba(254, 202, 202, 1); }
-.sticky-note--indigo:hover { background-color: rgba(199, 210, 254, 1); }
+.sticky-note--pinned::after {
+  border-color: transparent rgba(245, 158, 11, 0.3) transparent transparent;
+}
+
+/* Enhanced color palette with modern gradients */
+.sticky-note--yellow { 
+  background: linear-gradient(135deg, rgba(254, 243, 199, 0.95) 0%, rgba(253, 230, 138, 0.95) 100%);
+}
+.sticky-note--pink { 
+  background: linear-gradient(135deg, rgba(252, 231, 243, 0.95) 0%, rgba(251, 207, 232, 0.95) 100%);
+}
+.sticky-note--green { 
+  background: linear-gradient(135deg, rgba(209, 250, 229, 0.95) 0%, rgba(167, 243, 208, 0.95) 100%);
+}
+.sticky-note--blue { 
+  background: linear-gradient(135deg, rgba(219, 234, 254, 0.95) 0%, rgba(191, 219, 254, 0.95) 100%);
+}
+.sticky-note--purple { 
+  background: linear-gradient(135deg, rgba(237, 233, 254, 0.95) 0%, rgba(221, 214, 254, 0.95) 100%);
+}
+.sticky-note--red { 
+  background: linear-gradient(135deg, rgba(254, 226, 226, 0.95) 0%, rgba(254, 202, 202, 0.95) 100%);
+}
+.sticky-note--indigo { 
+  background: linear-gradient(135deg, rgba(224, 231, 255, 0.95) 0%, rgba(199, 210, 254, 0.95) 100%);
+}
+
+/* Enhanced hover effects with brighter gradients */
+.sticky-note--yellow:hover { 
+  background: linear-gradient(135deg, rgba(254, 249, 195, 1) 0%, rgba(252, 211, 77, 1) 100%);
+}
+.sticky-note--pink:hover { 
+  background: linear-gradient(135deg, rgba(253, 242, 248, 1) 0%, rgba(249, 168, 212, 1) 100%);
+}
+.sticky-note--green:hover { 
+  background: linear-gradient(135deg, rgba(220, 252, 231, 1) 0%, rgba(134, 239, 172, 1) 100%);
+}
+.sticky-note--blue:hover { 
+  background: linear-gradient(135deg, rgba(239, 246, 255, 1) 0%, rgba(147, 197, 253, 1) 100%);
+}
+.sticky-note--purple:hover { 
+  background: linear-gradient(135deg, rgba(245, 243, 255, 1) 0%, rgba(196, 181, 253, 1) 100%);
+}
+.sticky-note--red:hover { 
+  background: linear-gradient(135deg, rgba(254, 242, 242, 1) 0%, rgba(252, 165, 165, 1) 100%);
+}
+.sticky-note--indigo:hover { 
+  background: linear-gradient(135deg, rgba(238, 242, 255, 1) 0%, rgba(165, 180, 252, 1) 100%);
+}
 
 .sticky-note__add-btn {
   position: fixed;
-  bottom: clamp(15px, 4vw, 30px);
-  right: clamp(15px, 4vw, 30px);
-  width: clamp(45px, 12vw, 60px);
-  height: clamp(45px, 12vw, 60px);
+  bottom: clamp(20px, 5vw, 40px);
+  right: clamp(20px, 5vw, 40px);
+  width: clamp(56px, 14vw, 70px);
+  height: clamp(56px, 14vw, 70px);
   border-radius: 50%;
-  font-size: clamp(20px, 5vw, 30px);
-  background-color: #c180ea;
+  font-size: clamp(24px, 6vw, 32px);
+  background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
   color: white;
   border: none;
   cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  box-shadow: 
+    0 4px 12px rgba(139, 92, 246, 0.3),
+    0 8px 24px rgba(139, 92, 246, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1001;
   -webkit-tap-highlight-color: transparent;
-  transition: transform 0.2s ease, background-color 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .sticky-note__add-btn:hover {
-  transform: scale(1.1);
-  background-color: #b06cd8;
+  transform: scale(1.15) rotate(90deg);
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+  box-shadow: 
+    0 6px 16px rgba(139, 92, 246, 0.4),
+    0 12px 32px rgba(139, 92, 246, 0.3);
 }
 
 .sticky-note__add-btn:active {
-  transform: scale(0.95);
-  background-color: #a65ad0;
+  transform: scale(1.05) rotate(90deg);
+  background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
 }
 
 body {
@@ -361,3 +524,136 @@ body {
       padding-right: env(safe-area-inset-right, 0);
     }
   }
+
+/* Empty State Styling */
+.sticky-notes__empty-state {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: min(500px, 85%);
+  padding: 3rem 2rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(249, 250, 251, 0.9) 100%);
+  border-radius: 24px;
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.08),
+    0 8px 24px rgba(0, 0, 0, 0.06);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -45%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.empty-state__icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.empty-state__title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.85);
+  margin-bottom: 0.75rem;
+  background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.empty-state__description {
+  font-size: 1.1rem;
+  color: rgba(0, 0, 0, 0.6);
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.empty-state__highlight {
+  display: inline-block;
+  background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 1.2rem;
+  box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+}
+
+.empty-state__tip {
+  font-size: 0.95rem;
+  color: rgba(0, 0, 0, 0.5);
+  margin-top: 1.5rem;
+  padding: 0.75rem 1rem;
+  background: rgba(139, 92, 246, 0.05);
+  border-radius: 12px;
+  border-left: 3px solid #8b5cf6;
+}
+
+@media screen and (max-width: 576px) {
+  .sticky-notes__empty-state {
+    padding: 2rem 1.5rem;
+  }
+
+  .empty-state__icon {
+    font-size: 3rem;
+  }
+
+  .empty-state__title {
+    font-size: 1.5rem;
+  }
+
+  .empty-state__description {
+    font-size: 1rem;
+  }
+
+  .empty-state__highlight {
+    font-size: 1rem;
+    padding: 0.2rem 0.6rem;
+  }
+}
+
+/* Loading and Error States */
+.sticky-note-loading,
+.sticky-note-error {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  padding: 2rem;
+  border-radius: 16px;
+  font-size: 1.1rem;
+}
+
+.sticky-note-loading {
+  color: #8b5cf6;
+  background: rgba(167, 139, 250, 0.1);
+  border: 2px solid rgba(139, 92, 246, 0.2);
+}
+
+.sticky-note-error {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+  border: 2px solid rgba(239, 68, 68, 0.2);
+}

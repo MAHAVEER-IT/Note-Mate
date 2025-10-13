@@ -12,6 +12,7 @@ function StickyNoteCard({ note }) {
   const [localContent, setLocalContent] = useState(note.content || '');
   const [position, setPosition] = useState({ x: note.x || 0, y: note.y || 0 });
   const [isMobile, setIsMobile] = useState(false);
+  const [isPinned, setIsPinned] = useState(note.pinned || false);
 
   useEffect(() => {
     // Check if device is mobile or touch-based
@@ -136,6 +137,12 @@ function StickyNoteCard({ note }) {
     updateNote(note._id, { color: nextColor });
   };
 
+  const handleTogglePin = () => {
+    const newPinnedState = !isPinned;
+    setIsPinned(newPinnedState);
+    updateNote(note._id, { pinned: newPinnedState });
+  };
+
   const handleDelete = async () => {
     try {
       await deleteNote(note._id);
@@ -152,16 +159,30 @@ function StickyNoteCard({ note }) {
       onStop={handleStop}
       nodeRef={nodeRef}
       cancel=".sticky-note__content, .sticky-note__btn"
-      grid={isMobile ? [10, 10] : [1, 1]} // Snap to grid on mobile for easier placement
+      grid={isMobile ? [10, 10] : [1, 1]}
+      disabled={isPinned}
     >
       <div 
         ref={nodeRef} 
-        className={`sticky-note sticky-note--${note.color || 'yellow'} ${isDragging ? 'sticky-note--dragging' : ''}`}
+        className={`sticky-note sticky-note--${note.color || 'yellow'} ${isDragging ? 'sticky-note--dragging' : ''} ${isPinned ? 'sticky-note--pinned' : ''}`}
         aria-label={`Sticky note ${note.displayIndex}`}
       >
         <div className="sticky-note__header">
-          <span>Note #{note.displayIndex}</span>
-          <div>
+          <span>
+            📌 Note #{note.displayIndex}
+          </span>
+          <div className="sticky-note__buttons">
+            <button 
+              onClick={handleTogglePin} 
+              aria-label={isPinned ? "Unpin note" : "Pin note"}
+              title={isPinned ? "Unpin note" : "Pin note"}
+              className={`sticky-note__btn sticky-note__btn--pin ${isPinned ? 'pinned' : ''}`}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill={isPinned ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 17v5"></path>
+                <path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1v3.76Z"></path>
+              </svg>
+            </button>
             <button 
               onClick={handleChangeColor} 
               aria-label="Change color"
@@ -170,7 +191,7 @@ function StickyNoteCard({ note }) {
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="12" cy="12" r="10"></circle>
-                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7Z"></path>
               </svg>
             </button>
             <button 

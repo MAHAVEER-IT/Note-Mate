@@ -27,21 +27,15 @@ function StickyNoteList() {
   return (
     <div className="sticky-notes__list">
       {notes.length === 0 ? (
-        <div className="sticky-notes__empty-state" style={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          textAlign: 'center',
-          width: isMobile ? '80%' : '60%',
-          padding: '1rem',
-          backgroundColor: 'rgba(255, 255, 255, 0.7)',
-          borderRadius: '8px'
-        }}>
-          <p>No sticky notes yet. Click the + button to add one!</p>
+        <div className="sticky-notes__empty-state">
+          <div className="empty-state__icon">📝</div>
+          <h3 className="empty-state__title">No Sticky Notes Yet</h3>
+          <p className="empty-state__description">
+            Click the <span className="empty-state__highlight">+</span> button to create your first note!
+          </p>
           {isMobile && (
-            <p style={{ fontSize: '0.9rem', marginTop: '10px' }}>
-              Tap and drag to move notes. Tap inside to edit text.
+            <p className="empty-state__tip">
+              💡 Tip: Tap and drag to move notes, tap inside to edit
             </p>
           )}
         </div>
