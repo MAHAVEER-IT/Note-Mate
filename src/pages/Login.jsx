@@ -1,12 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../Styles/Login.css";
-import NotesImage from "../assets/images/Notes.png";
-import img1 from "../assets/images/img1.png";
-import img2 from "../assets/images/img2.png";
-import img3 from "../assets/images/img3.png";
 import * as AuthService from "../services/authService";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Sparkles, ArrowRight } from "lucide-react";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -39,108 +35,87 @@ function Login() {
   };
 
   return (
-    <div className="notes-app-container">
-      {/* Left Panel - Image */}
-      <div className="notes-app-image-panel">
-        <div className="notes-app-overlay">
-          <div className="notes-app-logo">
-            <i className="notes-app-icon file-text-icon"></i>
-          </div>
-          <h1 className="notes-app-title">Note-Mate</h1>
-          <p className="notes-app-tagline">
-            Capture your thoughts, organize your ideas, and boost your productivity.
-          </p>
-          <div className="notes-app-features">
-            <div className="notes-app-feature-icon">
-              <img 
-                src={img1} 
-                alt="Feature 1"
-                className="notes-app-feature-image"
-              />
-            </div>
-            <div className="notes-app-feature-icon">
-              <img 
-                src={img2} 
-                alt="Feature 2"
-                className="notes-app-feature-image"
-              />
-            </div>
-            <div className="notes-app-feature-icon">
-              <img 
-                src={img3} 
-                alt="Feature 3"
-                className="notes-app-feature-image"
-              />
-            </div>
-          </div>
-        </div>
-        <img 
-          src={NotesImage} 
-          alt="Notes app illustration" 
-          className="notes-app-bg-image"
-        />
+    <div className="auth-container">
+      {/* Animated Background */}
+      <div className="auth-animated-bg">
+        <div className="auth-sphere auth-sphere-1"></div>
+        <div className="auth-sphere auth-sphere-2"></div>
+        <div className="auth-sphere auth-sphere-3"></div>
       </div>
-      
-      {/* Right Panel - Form */}
-      <div className="notes-app-form-panel">
-        <div className="notes-app-form-container">
-          <div className="notes-app-form-header">
-            <h2 className="notes-app-form-title">Welcome Back</h2>
-            <p className="notes-app-form-subtitle">
-              Sign in to access your notes
-            </p>
-          </div>
-          
-          {error && (
-            <div className="notes-app-error">
-              {error}
+
+      {/* Form Container */}
+      <div className="auth-form-container">
+        <div className="auth-form-wrapper">
+          <div className="auth-form-header">
+            <div className="auth-logo-brand">
+              <Sparkles size={32} />
+              <span>Note-Mate</span>
             </div>
-          )}
-          
-          <form onSubmit={handleSubmit} className="notes-app-form">
-            <div className="notes-app-input-group">
-              <i className="mail-icon notes-app-input-icon"></i>
+            <h1>Welcome Back</h1>
+            <p>Sign in to your account to continue</p>
+          </div>
+
+          {error && <div className="auth-error-message">{error}</div>}
+
+          <form onSubmit={handleSubmit} className="auth-form">
+            <div className="auth-form-group">
+              <label htmlFor="email">Email Address</label>
               <input
+                id="email"
                 type="email"
-                placeholder="Email"
+                placeholder="you@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="notes-app-input"
                 required
               />
             </div>
-            
-            <div className="notes-app-input-group">
-              <i className="lock-icon notes-app-input-icon"></i>
-              <input
-                type={isPasswordVisible ? "text" : "password"}
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="notes-app-input"
-                required
-              />
-              <span
-                className="password-toggle-icon"
-                onClick={() => setIsPasswordVisible(!isPasswordVisible)}
-              >
-                {isPasswordVisible ? <EyeOff size={20} /> : <Eye size={20} />}
-              </span>
+
+            <div className="auth-form-group">
+              <label htmlFor="password">Password</label>
+              <div className="auth-password-wrapper">
+                <input
+                  id="password"
+                  type={isPasswordVisible ? "text" : "password"}
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+                <button
+                  type="button"
+                  className="auth-password-toggle"
+                  onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+                  aria-label="Toggle password visibility"
+                >
+                  {isPasswordVisible ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
             </div>
-            
-            
-            <button type="submit" className="notes-app-button" disabled={isLoading}>
-              {isLoading ? <div className="spinner"></div> : "Sign In"}
+
+            <button
+              type="submit"
+              className="auth-submit-btn"
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <>
+                  <span className="auth-spinner"></span>
+                  Signing in...
+                </>
+              ) : (
+                <>
+                  Sign In <ArrowRight size={18} />
+                </>
+              )}
             </button>
           </form>
-          
-          <div className="notes-app-toggle-container">
-            <p className="notes-app-toggle-text">
-              Don't have an account?
-              <Link to="/register" className="notes-app-toggle-button">
-                Sign Up
-              </Link>
-            </p>
+
+          <div className="auth-divider">
+            <span>or</span>
+          </div>
+
+          <div className="auth-footer">
+            <p>Don't have an account? <Link to="/register">Create one</Link></p>
           </div>
         </div>
       </div>

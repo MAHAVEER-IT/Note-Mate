@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
-import { generateStudyPlan } from '../services/geminiService';
+import { generateStudyPlan, RateLimitError } from '../services/nvidiaService';
 import { updateSchedule as updateScheduleService } from '../services/aiScheduleService';
 
 const AIContext = createContext();
@@ -16,6 +16,9 @@ export const AIProvider = ({ children }) => {
       const plan = await generateStudyPlan(prompt);
       setStudyPlan(plan);
     } catch (err) {
+      if (err instanceof RateLimitError) {
+        setStudyPlan({ schedule: err.schedule });
+      }
       setError(err.message);
       console.error('Failed to generate study plan:', err);
     } finally {

@@ -1,77 +1,159 @@
+/* Settings Page - Modern Design */
+
 .settings-page {
-  padding: 2rem;
-  min-height: calc(100vh - 64px);
+  display: flex;
+  justify-content: center;
+  padding: var(--spacing-2xl);
+  width: 100%;
 }
 
 .settings-container {
-  max-width: 800px;
-  margin: 0 auto;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 12px;
-  padding: 2rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: min(800px, 100%);
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-2xl);
+  border: 1px solid var(--neutral-200);
+  box-shadow: var(--shadow-md);
 }
 
 .settings-container h1 {
-  margin-bottom: 2rem;
-  color: #333;
+  margin: 0 0 var(--spacing-2xl) 0;
+  color: var(--neutral-900);
+  font-size: 1.75rem;
+  font-weight: 700;
 }
 
 .settings-section {
-  margin-bottom: 2rem;
+  margin-bottom: var(--spacing-2xl);
+  padding-bottom: var(--spacing-2xl);
+  border-bottom: 1px solid var(--neutral-200);
+}
+
+.settings-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
 
 .settings-section h2 {
-  font-size: 1.25rem;
-  color: #666;
-  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  color: var(--neutral-900);
+  margin-bottom: var(--spacing-lg);
+  font-weight: 600;
 }
 
+.settings-section p {
+  color: var(--neutral-600);
+  font-size: 0.95rem;
+  margin-bottom: var(--spacing-lg);
+  line-height: 1.6;
+}
+
+/* Theme Selector */
 .theme-selector {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--spacing-lg);
 }
 
 .theme-button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1rem;
-  border: 2px solid transparent;
-  border-radius: 8px;
+  padding: var(--spacing-md);
+  border: 2px solid var(--neutral-300);
+  border-radius: var(--radius-lg);
   cursor: pointer;
-  transition: all 0.2s ease;
-  background: var(--theme-card);
-  position: relative;
-  overflow: hidden;
+  transition: all var(--transition-base);
+  background: white;
+  box-shadow: var(--shadow-sm);
 }
 
 .theme-button:hover {
-  transform: translateY(-2px);
+  transform: translateY(-4px);
+  border-color: var(--primary-300);
+  box-shadow: var(--shadow-md);
 }
 
 .theme-button:hover .theme-preview {
-  transform: scale(1.02);
+  transform: scale(1.08);
 }
 
 .theme-button.active {
-  border-color: #8E54E9;
-  box-shadow: 0 0 0 2px rgba(142, 84, 233, 0.2);
+  border-color: var(--primary-500);
+  background: var(--primary-50);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1), var(--shadow-md);
 }
 
 .theme-preview {
   width: 100%;
   height: 100px;
-  border-radius: 8px;
-  margin-bottom: 0.5rem;
-  transition: transform 0.2s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-md);
+  transition: transform var(--transition-base);
+  box-shadow: var(--shadow-sm);
 }
 
 .theme-button span {
   font-size: 0.9rem;
-  color: var(--theme-text);
-  position: relative;
-  z-index: 1;
+  color: var(--neutral-700);
+  font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .settings-page {
+    padding: var(--spacing-lg);
+  }
+
+  .settings-container {
+    padding: var(--spacing-lg);
+  }
+
+  .settings-container h1 {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .settings-section {
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-lg);
+  }
+
+  .theme-selector {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: var(--spacing-md);
+  }
+
+  .theme-preview {
+    height: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .settings-container {
+    padding: var(--spacing-md);
+  }
+
+  .settings-container h1 {
+    font-size: 1.25rem;
+  }
+
+  .theme-selector {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-sm);
+  }
+
+  .theme-button {
+    padding: var(--spacing-sm);
+  }
+
+  .theme-preview {
+    height: 70px;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .theme-button span {
+    font-size: 0.85rem;
+  }
 }

@@ -1,12 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../Styles/Register.css";
-import NotesImage from "../assets/images/Notes.png";
-import img1 from "../assets/images/img1.png";
-import img2 from "../assets/images/img2.png";
-import img3 from "../assets/images/img3.png";
 import * as AuthService from "../services/authService";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Sparkles, ArrowRight } from "lucide-react";
 
 function Register() {
   const [email, setEmail] = useState("");
@@ -26,7 +22,8 @@ function Register() {
         setError("All fields are required");
         setIsLoading(false);
         return;
-      }      const response = await AuthService.register({
+      }
+      const response = await AuthService.register({
         username,
         email,
         password
@@ -43,120 +40,100 @@ function Register() {
   };
 
   return (
-    <div className="notes-app-container">
-      {/* Left Panel - Image */}
-      <div className="notes-app-image-panel">
-        <div className="notes-app-overlay">
-          <div className="notes-app-logo">
-            <i className="notes-app-icon file-text-icon"></i>
-          </div>
-          <h1 className="notes-app-title">Note-Mate</h1>
-          <p className="notes-app-tagline">
-            Join our community of note-takers and organize your thoughts effectively.
-          </p>
-          <div className="notes-app-features">
-            <div className="notes-app-feature-icon">
-              <img 
-                src={img1} 
-                alt="Feature 1"
-                className="notes-app-feature-image"
-              />
-            </div>
-            <div className="notes-app-feature-icon">
-              <img 
-                src={img2} 
-                alt="Feature 2"
-                className="notes-app-feature-image"
-              />
-            </div>
-            <div className="notes-app-feature-icon">
-              <img 
-                src={img3} 
-                alt="Feature 3"
-                className="notes-app-feature-image"
-              />
-            </div>
-          </div>
-        </div>
-        <img 
-          src={NotesImage} 
-          alt="Notes app illustration" 
-          className="notes-app-bg-image"
-        />
+    <div className="auth-container">
+      {/* Animated Background */}
+      <div className="auth-animated-bg">
+        <div className="auth-sphere auth-sphere-1"></div>
+        <div className="auth-sphere auth-sphere-2"></div>
+        <div className="auth-sphere auth-sphere-3"></div>
       </div>
-      
-      {/* Right Panel - Form */}
-      <div className="notes-app-form-panel">
-        <div className="notes-app-form-container">
-          <div className="notes-app-form-header">
-            <h2 className="notes-app-form-title">Create Account</h2>
-            <p className="notes-app-form-subtitle">
-              Sign up to start creating notes
-            </p>
-          </div>
-          
-          {error && (
-            <div className="notes-app-error">
-              {error}
+
+      {/* Form Container */}
+      <div className="auth-form-container">
+        <div className="auth-form-wrapper">
+          <div className="auth-form-header">
+            <div className="auth-logo-brand">
+              <Sparkles size={32} />
+              <span>Note-Mate</span>
             </div>
-          )}
-          
-          <form onSubmit={handleSubmit} className="notes-app-form">
-            <div className="notes-app-input-group">
-              <i className="user-icon notes-app-input-icon"></i>
+            <h1>Create Your Account</h1>
+            <p>Join our community and start organizing your ideas</p>
+          </div>
+
+          {error && <div className="auth-error-message">{error}</div>}
+
+          <form onSubmit={handleSubmit} className="auth-form">
+            <div className="auth-form-group">
+              <label htmlFor="username">Username</label>
               <input
+                id="username"
                 type="text"
-                placeholder="Username"
+                placeholder="Choose a username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="notes-app-input"
                 required
               />
             </div>
-            
-            <div className="notes-app-input-group">
-              <i className="mail-icon notes-app-input-icon"></i>
+
+            <div className="auth-form-group">
+              <label htmlFor="email">Email Address</label>
               <input
+                id="email"
                 type="email"
-                placeholder="Email"
+                placeholder="you@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="notes-app-input"
                 required
               />
             </div>
-            
-            <div className="notes-app-input-group">
-              <i className="lock-icon notes-app-input-icon"></i>
-              <input
-                type={isPasswordVisible ? "text" : "password"}
-                placeholder="Password (min. 6 characters)"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="notes-app-input"
-                required
-                minLength={6}
-              />
-              <span
-                className="password-toggle-icon"
-                onClick={() => setIsPasswordVisible(!isPasswordVisible)}
-              >
-                {isPasswordVisible ? <EyeOff size={20} /> : <Eye size={20} />}
-              </span>
+
+            <div className="auth-form-group">
+              <label htmlFor="password">Password</label>
+              <div className="auth-password-wrapper">
+                <input
+                  id="password"
+                  type={isPasswordVisible ? "text" : "password"}
+                  placeholder="At least 6 characters"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  minLength={6}
+                />
+                <button
+                  type="button"
+                  className="auth-password-toggle"
+                  onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+                  aria-label="Toggle password visibility"
+                >
+                  {isPasswordVisible ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
             </div>
-            
-            <button type="submit" className="notes-app-button" disabled={isLoading}>
-              {isLoading ? <div className="spinner"></div> : "Create Account"}
+
+            <button
+              type="submit"
+              className="auth-submit-btn"
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <>
+                  <span className="auth-spinner"></span>
+                  Creating account...
+                </>
+              ) : (
+                <>
+                  Create Account <ArrowRight size={18} />
+                </>
+              )}
             </button>
           </form>
-          
-          <div className="notes-app-toggle-container">
-            <p className="notes-app-toggle-text">
-              Already have an account?
-              <Link to="/login" className="notes-app-toggle-button">
-                Sign In
-              </Link>
-            </p>
+
+          <div className="auth-divider">
+            <span>or</span>
+          </div>
+
+          <div className="auth-footer">
+            <p>Already have an account? <Link to="/login">Sign in</Link></p>
           </div>
         </div>
       </div>

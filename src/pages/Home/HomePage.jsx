@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useCallback } from 'react';
-import { Plus } from 'lucide-react';
+import { Plus, LayoutGrid, Archive, Lightbulb, Settings, LogOut, Menu, X } from 'lucide-react';
 import NavBar from '../../components/NavBar/NavBar';
 import NoteList from '../../components/Notes/NoteList';
 import AddNoteModal from '../../components/Notes/AddNoteModal';
@@ -15,6 +15,7 @@ import './HomePage.css';
 function HomePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('notes');
+  const [sidebarOpen, setSidebarOpen] = useState(true);
   const { addNote } = useNotes();
   
   const handleOpenModal = useCallback(() => setIsModalOpen(true), []);
@@ -25,18 +26,29 @@ function HomePage() {
     setIsModalOpen(false);
   }, [addNote]);
 
-  // Memoize tab components to prevent unnecessary re-renders
+  const navigationItems = [
+    { id: 'notes', label: 'My Notes', icon: LayoutGrid },
+    { id: 'sticky', label: 'Today\'s Focus', icon: Lightbulb },
+    { id: 'archive', label: 'Archive', icon: Archive },
+    { id: 'ai', label: 'AI Assistant', icon: Lightbulb },
+    { id: 'settings', label: 'Settings', icon: Settings },
+  ];
+
   const notesTabContent = useMemo(() => (
-    <div className="notes-page">
-      <div className="view-header">
-        <h1 className="page-title">My Notes</h1>
+    <div className="tab-content">
+      <div className="tab-header">
+        <div>
+          <h1>My Notes</h1>
+          <p className="text-muted">Organize and manage your notes</p>
+        </div>
+        <button className="btn btn-primary" onClick={handleOpenModal}>
+          <Plus size={20} />
+          New Note
+        </button>
       </div>
       <div className="notes-content">
         <NoteList isArchiveView={false} />
       </div>
-      <button className="add-note-button" onClick={handleOpenModal}>
-        <Plus size={24} />
-      </button>
       {isModalOpen && (     
         <AddNoteModal
           onClose={handleCloseModal}
@@ -47,9 +59,12 @@ function HomePage() {
   ), [isModalOpen, handleOpenModal, handleCloseModal, handleSaveNote]);
 
   const archiveTabContent = useMemo(() => (
-    <div className="notes-page">
-      <div className="view-header">
-        <h1 className="page-title">Archived Notes</h1>
+    <div className="tab-content">
+      <div className="tab-header">
+        <div>
+          <h1>Archived Notes</h1>
+          <p className="text-muted">View your archived notes</p>
+        </div>
       </div>
       <div className="notes-content">
         <NoteList isArchiveView={true} />
@@ -59,27 +74,77 @@ function HomePage() {
 
   const stickyTabContent = useMemo(() => (
     <StickyNoteProvider>
-      <div className="page">
-        <h1 className="title">Today's Focus</h1>
-        <StickyNoteList />
-        <AddStickyNoteModal />
+      <div className="tab-content">
+        <div className="tab-header">
+          <div>
+            <h1>Today's Focus</h1>
+            <p className="text-muted">Quick notes for today</p>
+          </div>
+          <AddStickyNoteModal />
+        </div>
+        <div className="sticky-content">
+          <StickyNoteList />
+        </div>
       </div>
     </StickyNoteProvider>
   ), []);
   
   const aiTabContent = useMemo(() => (
     <AIProvider>
-      <AIPage />
+      <div className="tab-content">
+        <AIPage />
+      </div>
     </AIProvider>
   ), []);
   
-  const settingsTabContent = useMemo(() => <SettingsPage />, []);
+  const settingsTabContent = useMemo(() => (
+    <div className="tab-content">
+      <SettingsPage />
+    </div>
+  ), []);
 
   return (
-    <div className="home-page">
-      <NavBar activeTab={activeTab} setActiveTab={setActiveTab} />
-      <div className="page-wrapper">
-        <main className="main-content">
+    <div className="home-page-container">
+      <NavBar />
+      <div className="home-layout">
+        {/* Sidebar */}
+        <aside className={`sidebar ${sidebarOpen ? 'open' : 'closed'}`}>
+          <div className="sidebar-header">
+            <h2>Note-Mate</h2>
+            <button 
+              className="sidebar-toggle"
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+            >
+              {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
+
+          <nav className="sidebar-nav">
+            {navigationItems.map(item => {
+              const Icon = item.icon;
+              return (
+                <button
+                  key={item.id}
+                  className={`nav-item ${activeTab === item.id ? 'active' : ''}`}
+                  onClick={() => setActiveTab(item.id)}
+                >
+                  <Icon size={20} />
+                  {sidebarOpen && <span>{item.label}</span>}
+                </button>
+              );
+            })}
+          </nav>
+
+          <div className="sidebar-footer">
+            <button className="nav-item logout">
+              <LogOut size={20} />
+              {sidebarOpen && <span>Logout</span>}
+            </button>
+          </div>
+        </aside>
+
+        {/* Main Content */}
+        <main className="main-content-new">
           {activeTab === 'notes' && notesTabContent}
           {activeTab === 'archive' && archiveTabContent}
           {activeTab === 'sticky' && stickyTabContent}

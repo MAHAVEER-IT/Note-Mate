@@ -3,6 +3,7 @@ import React from 'react';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
 import HomePage from '../pages/Home/HomePage';
+import ProtectedRoute from './ProtectedRoute';
 
 function AppRoutes() {
     return (
@@ -10,7 +11,9 @@ function AppRoutes() {
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/home" element={<HomePage />} />
+        <Route path="/home" element={<ProtectedRoute element={<HomePage />} />} />
         </Routes>
     );
 }
+
+export default AppRoutes;

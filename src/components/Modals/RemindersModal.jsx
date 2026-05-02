@@ -21,7 +21,7 @@ function RemindersModal({ isOpen, onClose }) {
 
   return (
     <>
-      <div className="modal-overlay" onClick={onClose} />
+      <div className="modal-overlay reminders-overlay" onClick={onClose} />
       <div className="reminders-modal">
         <div className="reminders-header">
           <h2>Today's Reminders</h2>

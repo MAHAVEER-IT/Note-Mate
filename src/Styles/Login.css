@@ -1,288 +1,473 @@
-.notes-app-container {
-    display: flex;
-    height: 100vh;
-    width: 100%;
-    background: linear-gradient(135deg, #E0F7FA 0%, #B2DFDB 50%, #80CBC4 100%);
-  }
+/* ============================================================
+   MODERN AUTH PAGES - BLUE & WHITE THEME WITH ANIMATIONS
+   ============================================================ */
+
+:root {
+  --primary-blue: #3b82f6;
+  --primary-blue-dark: #1d4ed8;
+  --primary-blue-light: #60a5fa;
+  --secondary-blue: #0c2d6b;
+  --accent-blue: #06b6d4;
   
-  /* Image Panel */
-  .notes-app-image-panel {
-    display: none;
-    position: relative;
-    width: 50%;
-  }
+  --white: #ffffff;
+  --off-white: #f8fafc;
+  --light-gray: #e2e8f0;
+  --medium-gray: #cbd5e1;
+  --dark-gray: #1e293b;
   
-  .notes-app-overlay {
-    position: absolute;
-    inset: 0;
-    background-color: rgba(0, 0, 0, 0.3);
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 3rem;
-    color: white;
-    -webkit-backdrop-filter: blur(2px);
-    backdrop-filter: blur(2px);
+  --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  --gradient-light: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.auth-container {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #f0f4ff 100%);
+  position: relative;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+}
+
+/* ============================================================
+   ANIMATED BACKGROUND
+   ============================================================ */
+
+.auth-animated-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.auth-sphere {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.15;
+  animation: float-auth 15s ease-in-out infinite;
+}
+
+.auth-sphere-1 {
+  width: 400px;
+  height: 400px;
+  background: var(--primary-blue);
+  top: -100px;
+  left: -100px;
+  animation-delay: 0s;
+}
+
+.auth-sphere-2 {
+  width: 300px;
+  height: 300px;
+  background: var(--accent-blue);
+  top: 50%;
+  right: -50px;
+  animation-delay: 5s;
+}
+
+.auth-sphere-3 {
+  width: 350px;
+  height: 350px;
+  background: var(--primary-blue-light);
+  bottom: -100px;
+  left: 50%;
+  animation-delay: 10s;
+}
+
+@keyframes float-auth {
+  0%, 100% {
+    transform: translate(0, 0);
   }
-  
-  .notes-app-logo {
-    width: 80px;
-    height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1.5rem;
+  25% {
+    transform: translate(30px, -30px);
   }
-  
-  .notes-app-title {
-    font-size: 2.5rem;
-    font-weight: bold;
-    margin-bottom: 1.5rem;
-    text-align: center;
+  50% {
+    transform: translate(-20px, 20px);
   }
-  
-  .notes-app-tagline {
-    font-size: 1.25rem;
-    text-align: center;
-    margin-bottom: 2rem;
-    line-height: 1.6;
+  75% {
+    transform: translate(20px, 30px);
   }
-  
-  .notes-app-features {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    margin-top: 2rem;
+}
+
+/* ============================================================
+   FORM CONTAINER
+   ============================================================ */
+
+.auth-form-container {
+  width: 100%;
+  max-width: 450px;
+  padding: 40px;
+  position: relative;
+  z-index: 1;
+  animation: slideInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.auth-form-wrapper {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(59, 130, 246, 0.1);
+  border-radius: 24px;
+  padding: 50px;
+  box-shadow: 0 20px 60px rgba(59, 130, 246, 0.1);
+}
+
+/* ============================================================
+   FORM HEADER
+   ============================================================ */
+
+.auth-form-header {
+  text-align: center;
+  margin-bottom: 40px;
+  animation: fadeInDown 0.6s ease 0.1s both;
+}
+
+.auth-logo-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 24px;
+  font-weight: 700;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 20px;
+}
+
+.auth-logo-brand svg {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  width: 32px;
+  height: 32px;
+}
+
+.auth-form-header h1 {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--dark-gray);
+  margin-bottom: 10px;
+}
+
+.auth-form-header p {
+  font-size: 15px;
+  color: #64748b;
+}
+
+/* ============================================================
+   FORM ELEMENTS
+   ============================================================ */
+
+.auth-form {
+  animation: fadeInUp 0.6s ease 0.2s both;
+}
+
+.auth-form-group {
+  margin-bottom: 24px;
+}
+
+.auth-form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--dark-gray);
+  margin-bottom: 8px;
+}
+
+.auth-form-group input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid var(--light-gray);
+  border-radius: 12px;
+  font-size: 15px;
+  color: var(--dark-gray);
+  background: var(--white);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: inherit;
+}
+
+.auth-form-group input:focus {
+  outline: none;
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  background: rgba(59, 130, 246, 0.02);
+}
+
+.auth-form-group input::placeholder {
+  color: #94a3b8;
+}
+
+/* ============================================================
+   PASSWORD WRAPPER
+   ============================================================ */
+
+.auth-password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.auth-password-wrapper input {
+  width: 100%;
+  padding-right: 45px;
+}
+
+.auth-password-toggle {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.3s ease;
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.auth-password-toggle:hover {
+  color: var(--primary-blue);
+  background: rgba(59, 130, 246, 0.1);
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+
+.auth-submit-btn {
+  width: 100%;
+  padding: 14px 24px;
+  background: var(--gradient-primary);
+  color: var(--white);
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+  animation: fadeInUp 0.6s ease 0.3s both;
+}
+
+.auth-submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 35px rgba(59, 130, 246, 0.4);
+}
+
+.auth-submit-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.auth-submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.auth-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid var(--white);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
-  
-  .notes-app-feature-icon {
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    -webkit-backdrop-filter: blur(4px);
-    backdrop-filter: blur(4px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+}
+
+/* ============================================================
+   ERROR MESSAGE
+   ============================================================ */
+
+.auth-error-message {
+  background: rgba(239, 68, 68, 0.1);
+  color: #dc2626;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border-left: 4px solid #dc2626;
+  font-size: 14px;
+  margin-bottom: 24px;
+  animation: slideInDown 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================================
+   DIVIDER
+   ============================================================ */
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  margin: 30px 0;
+  font-size: 13px;
+  color: #94a3b8;
+  animation: fadeInUp 0.6s ease 0.4s both;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--light-gray);
+}
+
+.auth-divider span {
+  padding: 0 12px;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+
+.auth-footer {
+  text-align: center;
+  animation: fadeInUp 0.6s ease 0.5s both;
+}
+
+.auth-footer p {
+  font-size: 14px;
+  color: #64748b;
+}
+
+.auth-footer a {
+  color: var(--primary-blue);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+  margin-left: 4px;
+}
+
+.auth-footer a:hover {
+  color: var(--primary-blue-dark);
+  text-decoration: underline;
+}
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
   }
-  
-  .notes-app-feature-icon:hover {
-    transform: scale(1.05);
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  .notes-app-feature-image {
-    width: 50px;
-    height: 50px;
-    object-fit: contain;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
   }
-  
-  .notes-app-bg-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  /* Form Panel */
-  .notes-app-form-panel {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-    box-sizing: border-box;
-    background: rgba(255, 255, 255, 0.05);
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  
-  .notes-app-form-container {
-    background-color: white;
-    border-radius: 1rem;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-    padding: 2.5rem;
-    width: 100%;
-    max-width: 28rem;
-    box-sizing: border-box;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  .notes-app-form-header {
-    text-align: center;
-    margin-bottom: 2rem;
-  }
-  
-  .notes-app-form-title {
-    font-size: 1.875rem;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 0.5rem;
-  }
-  
-  .notes-app-form-subtitle {
-    color: #666;
-  }
-  
-  .notes-app-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-  }
-  
-  .notes-app-input-group {
-    position: relative;
-    width: 100%;
-    box-sizing: border-box;
-  }
-  
-  .notes-app-input-icon {
-    position: absolute;
-    left: 0.75rem;
-    top: 0.875rem;
-    color: #999;
-  }
-  
-  .notes-app-input {
-    width: 100%;
-    padding: 0.85rem 1rem 0.85rem 2.5rem;
-    border: 1px solid #E0E0E0;
-    border-radius: 0.75rem;
-    font-size: 1rem;
-    transition: border-color 0.2s, box-shadow 0.2s;
-    box-sizing: border-box;
-    background-color: #F9FAFB;
-  }
-  
-  .notes-app-input:focus {
-    outline: none;
-    border-color: #26A69A;
-    box-shadow: 0 0 0 3px rgba(38, 166, 154, 0.2);
-    background-color: #FFFFFF;
-  }
-  
-  .notes-app-forgot-password {
-    display: flex;
-    justify-content: flex-end;
-    font-size: 0.875rem;
-  }
-  
-  .notes-app-link {
-    color: #26A69A;
-    text-decoration: none;
-    font-weight: 500;
-  }
-  
-  .notes-app-link:hover {
-    text-decoration: underline;
-  }
-  
-  .notes-app-button {
-    padding: 0.85rem;
-    background: linear-gradient(90deg, #26A69A, #4DB6AC);
-    color: white;
-    border: none;
-    border-radius: 0.75rem;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 2px 10px rgba(38, 166, 154, 0.2);
-  }
-  
-  .notes-app-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(38, 166, 154, 0.3);
-  }
-  
-  .notes-app-toggle-container {
-    margin-top: 1.75rem;
-    text-align: center;
-  }
-  
-  .notes-app-toggle-text {
-    color: #666;
-    font-size: 0.95rem;
-  }
-  
-  .notes-app-toggle-button {
-    background: none;
-    border: none;
-    color: #26A69A;
-    font-weight: 600;
-    cursor: pointer;
-    padding: 0.25rem 0.5rem;
-    margin-left: 0.25rem;
-  }
-  
-  .notes-app-toggle-button:hover {
-    text-decoration: underline;
-  }
-  
-  .notes-app-icon,
-  .user-icon,
-  .mail-icon,
-  .lock-icon,
-  .camera-icon,
-  .file-icon {
-    display: inline-block;
-    width: 24px;
-    height: 24px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-  }
-  
-  .notes-app-error {
-    background-color: #FFEBEE;
-    color: #D32F2F;
-    padding: 0.85rem;
-    border-radius: 0.75rem;
-    margin-bottom: 1.25rem;
-    font-size: 0.9rem;
-    text-align: center;
-    border-left: 4px solid #EF5350;
-  }
-  
-  @media (min-width: 768px) {
-    .notes-app-image-panel {
-      display: block;
-    }
-    
-    .notes-app-form-panel {
-      width: 50%;
-    }
+}
+
+/* ============================================================
+   RESPONSIVE DESIGN
+   ============================================================ */
+
+@media (max-width: 768px) {
+  .auth-form-container {
+    max-width: 100%;
+    padding: 20px;
   }
 
-  .spinner {
-    border: 4px solid rgba(0, 0, 0, 0.1);
-    border-top: 4px solid #26A69A;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    animation: spin 1s linear infinite;
-    margin: 0 auto;
+  .auth-form-wrapper {
+    padding: 40px 30px;
+    border-radius: 20px;
   }
-  
-  @keyframes spin {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
+
+  .auth-form-header h1 {
+    font-size: 28px;
   }
-  
-  .password-toggle-icon {
-    position: absolute;
-    right: 0.75rem;
-    top: 0.875rem;
-    cursor: pointer;
-    color: #80CBC4;
+
+  .auth-form-header p {
+    font-size: 14px;
   }
-  
-  .password-toggle-icon:hover {
-    color: #26A69A;
+
+  .auth-sphere {
+    filter: blur(50px);
   }
+
+  .auth-sphere-1 {
+    width: 250px;
+    height: 250px;
+  }
+
+  .auth-sphere-2 {
+    width: 200px;
+    height: 200px;
+  }
+
+  .auth-sphere-3 {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-form-container {
+    padding: 15px;
+  }
+
+  .auth-form-wrapper {
+    padding: 30px 20px;
+  }
+
+  .auth-form-header h1 {
+    font-size: 24px;
+  }
+
+  .auth-logo-brand svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .auth-form-group {
+    margin-bottom: 20px;
+  }
+
+  .auth-submit-btn {
+    padding: 12px 20px;
+    font-size: 15px;
+  }
+}

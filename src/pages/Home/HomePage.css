@@ -1,57 +1,208 @@
-.home-page {
+.home-page-container {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
-  background-color: #f9f9f9;
+  background: var(--neutral-50);
+}
+
+.home-layout {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Sidebar Styles */
+.sidebar {
+  width: 280px;
+  background: white;
+  border-right: 1px solid var(--neutral-200);
+  display: flex;
+  flex-direction: column;
+  transition: all var(--transition-base);
+  overflow-y: auto;
+}
+
+.sidebar.closed {
+  width: 80px;
+}
+
+.sidebar-header {
+  padding: var(--spacing-lg);
+  border-bottom: 1px solid var(--neutral-200);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+}
+
+.sidebar-header h2 {
+  font-size: 1.25rem;
+  color: var(--primary-600);
+  margin: 0;
+  white-space: nowrap;
+}
+
+.sidebar-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--neutral-600);
+  padding: var(--spacing-sm);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-base);
+}
+
+.sidebar-toggle:hover {
+  background: var(--neutral-100);
+  color: var(--neutral-900);
+}
+
+.sidebar-nav {
+  flex: 1;
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  border: none;
+  border-radius: var(--radius-lg);
+  background: transparent;
+  color: var(--neutral-600);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.nav-item:hover {
+  background: var(--neutral-100);
+  color: var(--neutral-900);
+}
+
+.nav-item.active {
+  background: var(--primary-100);
+  color: var(--primary-600);
+}
+
+.nav-item.logout {
+  color: var(--error);
+}
+
+.nav-item.logout:hover {
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.sidebar-footer {
+  padding: var(--spacing-md);
+  border-top: 1px solid var(--neutral-200);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+/* Main Content */
+.main-content-new {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--spacing-2xl);
   display: flex;
   flex-direction: column;
 }
 
-.page-wrapper {
+.tab-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.tab-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--spacing-lg);
+}
+
+.tab-header h1 {
+  margin: 0;
+  color: var(--neutral-900);
+}
+
+.tab-header .text-muted {
+  color: var(--neutral-500);
+  font-size: 0.95rem;
+  margin-top: var(--spacing-xs);
+}
+
+.tab-header > div:first-child {
   flex: 1;
 }
 
-.notes-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
-
-.main-content {
-  padding: 1rem;
-  height: calc(100vh - 64px); /* Adjust based on your navbar height */
-  overflow-y: auto;
-}
-
-.main-content h1 {
-  color: #333;
-  margin-bottom: 1rem;
-}
-
-.main-content p {
-  color: #666;
-  font-size: 1.1rem;
-}
-
-.notes-page {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
-
 .notes-content {
-  margin-top: 0.5rem;
+  flex: 1;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--spacing-lg);
 }
 
-/* src/pages/Home/HomePage.css */
-.sticky-area {
-  position: relative;
-  width: 100%;
-  height: calc(100vh - 70px); /* if your navbar is 70px height */
-  overflow: hidden;
+.sticky-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--spacing-lg);
+  flex: 1;
 }
 
-/* Bonus */
-.sticky-note-list {
-  position: relative;
-  width: 100%;
-  height: 100%;
+/* Responsive Design */
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 60px;
+    height: calc(100vh - 60px);
+    z-index: 100;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .sidebar.closed {
+    transform: translateX(-100%);
+  }
+
+  .sidebar-toggle {
+    display: block;
+  }
+
+  .home-layout {
+    flex-direction: column;
+  }
+
+  .main-content-new {
+    padding: var(--spacing-lg);
+  }
+
+  .tab-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .tab-header button {
+    width: 100%;
+  }
+
+  .notes-content {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+  }
+
+  .sticky-content {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+  }
 }
