@@ -23,6 +23,11 @@ function Register() {
         setIsLoading(false);
         return;
       }
+      if (password.length < 6) {
+        setError("Password must be at least 6 characters");
+        setIsLoading(false);
+        return;
+      }
       const response = await AuthService.register({
         username,
         email,
@@ -32,7 +37,14 @@ function Register() {
         navigate("/login");
       }
     } catch (error) {
-      setError(error.response?.data?.message || "Registration failed");
+      // Handle error messages from authService
+      if (error.message) {
+        setError(error.message);
+      } else if (error.response?.data?.message) {
+        setError(error.response.data.message);
+      } else {
+        setError("Registration failed. Please try again.");
+      }
       console.error("Registration failed", error);
     } finally {
       setIsLoading(false);

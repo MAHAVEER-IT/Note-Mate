@@ -27,7 +27,14 @@ function Login() {
         navigate("/home");
       }
     } catch (error) {
-      setError(error.response?.data?.message || "Login failed");
+      // Handle error messages from authService
+      if (error.message) {
+        setError(error.message);
+      } else if (error.response?.data?.message) {
+        setError(error.response.data.message);
+      } else {
+        setError("Login failed. Please check your credentials and try again.");
+      }
       console.error("Login failed", error);
     } finally {
       setIsLoading(false);
