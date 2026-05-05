@@ -1,188 +1,214 @@
-# Note-Mate
+# Note-Mate Frontend
 
-Note-Mate is a comprehensive note-taking and productivity application that helps users organize their thoughts, manage tasks, and create AI-generated study plans. Built with React and Node.js, it offers a full-stack solution for personal productivity management.
-
-<img src="public/notemate.png" alt="Note Mate Logo" width="100" height="100"/>
+A comprehensive note-taking and productivity web application built with React and Vite. Features include notes management, draggable sticky notes, AI-powered study planning, and dark/light theme support.
 
 ## Features
 
-### 📝 Note Management
-- Create, edit, and delete notes
-- Color-coded notes for visual organization
-- Archive functionality for completed notes
-- Set reminders for important notes
-
-### 📌 Sticky Notes
-- Create draggable sticky notes for quick reminders
-- Customize colors
-- Position anywhere on your workspace
-- Persist across sessions
-
-### 🤖 AI Study Planner
-- Generate personalized study schedules using AI
-- Voice input support for creating study plans
-- Save and view schedule history
-- Modify generated schedules to fit your needs
-
-### 🌓 Theme Support
-- Light and dark mode
-- Personalized UI experience
-
-### 🔔 Notifications
-- Reminder notifications
-- System alerts and messages
-
-### 🔐 User Authentication
-- Secure login and registration
-- Protected routes for authenticated users
+- 📝 **Note Management** - Create, edit, delete, and archive notes with color coding
+- 📌 **Sticky Notes** - Draggable notes that persist across sessions
+- 🤖 **AI Study Planner** - Generate personalized study schedules using NVIDIA API (via backend)
+- 🌓 **Theme Support** - Light and dark mode
+- 🔔 **Reminders** - Set reminders for important notes
+- 🔐 **Authentication** - Secure login/register with JWT tokens
+- 📱 **Responsive** - Mobile-friendly UI
 
 ## Tech Stack
 
-### Frontend
-- **React**: UI library for building the user interface
-- **React Router**: For navigation and routing
-- **Context API**: For state management
-- **Axios**: For HTTP requests
-- **React-Draggable**: For sticky note functionality
-- **Lucide-React**: For icons
-- **CSS**: For styling components
+- **React 18** - UI library
+- **Vite** - Build tool and dev server
+- **Axios** - HTTP client
+- **React Router v6** - Navigation
+- **Context API** - State management
+- **TailwindCSS** - Styling
+- **Lucide React** - Icons
+- **React Draggable** - Sticky note positioning
 
-### Backend
-- **Node.js**: JavaScript runtime
-- **Express**: Web application framework
-- **MongoDB**: NoSQL database for data storage
-- **Mongoose**: ODM for MongoDB
-- **JWT**: For authentication
-- **bcrypt**: For password hashing
-- **Cors**: For cross-origin resource sharing
-- **dotenv**: For environment variables
-
-### AI Integration
-- **Google Gemini API**: For generating AI study plans
-
-## Installation and Setup
+## Getting Started
 
 ### Prerequisites
-- Node.js (v14 or higher)
-- MongoDB (local or Atlas)
+
+- Node.js 16+ 
 - npm or yarn
+- Backend server running (see [Note-Mate-Backend](../Note-Mate-Backend-main/README.md))
 
-### Frontend Setup
-1. Clone the repository
-   ```bash
-   git clone https://github.com/MAHAVEER-IT/Note-Mate.git
-   cd Note-Mate
-   ```
+### Installation
 
-2. Install dependencies
-   ```bash
-   npm install
-   ```
+```bash
+# Clone or navigate to frontend directory
+cd Note-Mate
 
-3. Create a `.env` file in the root directory with the following variables:
-   ```
-   VITE_API_URL=http://localhost:5000/api
-   VITE_GEMINI_API_KEY=your_gemini_api_key
-   ```
+# Install dependencies
+npm install
 
-4. Start the development server
-   ```bash
-   npm run dev
-   ```
+# Create .env file
+cp .env.example .env
+# Edit .env with your backend API URL
+```
 
-### Backend Setup
-1. Navigate to the backend directory
-   ```bash
-   cd Backend
-   ```
+### Environment Variables
 
-2. Install dependencies
-   ```bash
-   npm install
-   ```
+Create a `.env` file:
 
-3. Create a `.env` file in the backend directory with the following variables:
-   ```
-   PORT=5000
-   MONGODB_URI=your_mongodb_connection_string
-   JWT_SECRET=your_jwt_secret
-   ```
+```env
+VITE_API_URL=http://localhost:5000
+```
 
-4. Start the backend server
-   ```bash
-   npm run dev
-   ```
+### Development
+
+```bash
+# Start dev server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+
+# Lint code
+npm run lint
+```
 
 ## Project Structure
 
 ```
-Note-Mate/
-├── Backend/
-│   ├── controllers/
-│   ├── middleware/
-│   ├── models/
-│   ├── routes/
-│   └── server.js
-├── public/
-├── src/
-│   ├── assets/
-│   ├── components/
-│   │   ├── AI/
-│   │   ├── Modals/
-│   │   ├── NavBar/
-│   │   ├── Notes/
-│   │   ├── Notifications/
-│   │   ├── Settings/
-│   │   └── StickyNote/
-│   ├── context/
-│   ├── pages/
-│   ├── routes/
-│   ├── services/
-│   ├── Styles/
-│   ├── App.jsx
-│   └── main.jsx
-├── .env
-├── index.html
-├── package.json
-└── vite.config.js
+src/
+├── components/          # Reusable UI components
+│   ├── AI/             # Study planner UI
+│   ├── Notes/          # Note management UI
+│   ├── StickyNote/     # Draggable sticky notes
+│   ├── NavBar/         # Navigation
+│   ├── Settings/       # User preferences
+│   └── Modals/         # Modal dialogs
+├── pages/              # Page components
+│   ├── Login.jsx
+│   ├── Register.jsx
+│   ├── Home/
+│   └── LandingPage/
+├── context/            # State management
+│   ├── AuthContext.jsx
+│   ├── NotesContext.jsx
+│   ├── AIContext.jsx
+│   ├── ThemeContext.jsx
+│   └── NotificationsContext.jsx
+├── services/           # API communication
+│   ├── apiClient.js    # Axios instance
+│   ├── authService.js
+│   ├── notesService.js
+│   ├── nvidiaService.js
+│   └── StickyNoteService.js
+├── routes/             # Route configuration
+│   ├── AppRoutes.jsx
+│   └── ProtectedRoute.jsx
+└── App.jsx             # Main component
+```
+
+## Context API
+
+### AuthContext
+Manages user authentication state and login/logout.
+
+```javascript
+const { user, login, logout, isAuthenticated } = useAuth();
+```
+
+### NotesContext
+Manages all notes CRUD operations.
+
+```javascript
+const { notes, createNote, updateNote, deleteNote, archiveNote } = useNotes();
+```
+
+### AIContext
+Manages study plan generation and history.
+
+```javascript
+const { generateStudyPlan, studyPlan, isLoading, error } = useAI();
+```
+
+### ThemeContext
+Manages light/dark theme.
+
+```javascript
+const { theme, toggleTheme } = useTheme();
 ```
 
 ## API Endpoints
 
-### Authentication
-- `POST /api/auth/register` - Register a new user
-- `POST /api/auth/login` - Login a user
+All endpoints are prefixed with `/api`:
 
-### Notes
-- `GET /api/notes` - Get all notes for a user
-- `POST /api/notes` - Create a new note
-- `PUT /api/notes/:id` - Update a note
-- `DELETE /api/notes/:id` - Delete a note
-- `PUT /api/notes/:id/archive` - Archive/unarchive a note
+- `POST /auth/register` - Register new user
+- `POST /auth/login` - User login
+- `GET /notes` - Get all user notes
+- `POST /notes` - Create note
+- `PUT /notes/:id` - Update note
+- `DELETE /notes/:id` - Delete note
+- `PUT /notes/:id/archive` - Archive note
+- `GET /sticky-notes` - Get sticky notes
+- `POST /sticky-notes` - Create sticky note
+- `PUT /sticky-notes/:id` - Update sticky note
+- `DELETE /sticky-notes/:id` - Delete sticky note
+- `POST /ai/chat/completions` - Generate study plan
 
-### Sticky Notes
-- `GET /api/sticky-notes` - Get all sticky notes
-- `POST /api/sticky-notes` - Create a new sticky note
-- `PUT /api/sticky-notes/:id` - Update a sticky note
-- `DELETE /api/sticky-notes/:id` - Delete a sticky note
+## Security
 
-### AI Schedules
-- `GET /api/ai-schedules` - Get all schedules
-- `POST /api/ai-schedules` - Save a new schedule
-- `GET /api/ai-schedules/:id` - Get a specific schedule
-- `PUT /api/ai-schedules/:id` - Update a schedule
+⚠️ **Important**: The NVIDIA API key is handled securely on the backend. The frontend only sends prompts to `/api/ai/chat/completions`, keeping all sensitive credentials server-side.
 
-## Future Enhancements
-- Mobile application support
-- Collaborative note sharing
-- Export functionality for notes and schedules
-- More AI-powered features
-- Calendar integration
-- Task tracking and analytics
+## Deployment
+
+### Vercel (Recommended)
+
+```bash
+# Install Vercel CLI
+npm i -g vercel
+
+# Deploy
+vercel
+```
+
+### Build & Serve
+
+```bash
+# Build production bundle
+npm run build
+
+# Serve dist folder with any static server
+npx serve dist
+```
+
+## Browser Support
+
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
+
+## Troubleshooting
+
+### API connection errors
+- Ensure backend is running on `http://localhost:5000`
+- Check `.env` file has correct `VITE_API_URL`
+- Verify CORS is enabled in backend
+
+### Theme not persisting
+- Check if localStorage is enabled in browser
+- Clear browser cache and reload
+
+### AI study plan not generating
+- Ensure backend has `NVIDIA_API_KEY` in `.env`
+- Check backend logs for API errors
 
 ## Contributing
-Contributions are welcome! Please feel free to submit a Pull Request.
 
+1. Create a feature branch
+2. Make your changes
+3. Test thoroughly
+4. Submit a pull request
 
-## Author
-[MAHAVEER-IT](https://github.com/MAHAVEER-IT)
+## License
+
+ISC
+
+## Support
+
+For issues and feature requests, please check the [Issues](https://github.com/MAHAVEER-IT/Note-Mate-Frontend/issues) page.

@@ -34,7 +34,7 @@
   background: linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #f0f4ff 100%);
   position: relative;
   overflow: hidden;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  font-family: var(--font-sans);
 }
 
 /* ============================================================
@@ -469,5 +469,22 @@
   .auth-submit-btn {
     padding: 12px 20px;
     font-size: 15px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .auth-form-container {
+    padding: 32px;
+  }
+
+  .auth-form-wrapper {
+    padding: 44px 36px;
+  }
+}
+
+@media (max-height: 700px) {
+  .auth-container {
+    align-items: flex-start;
+    padding: 20px 0;
   }
 }

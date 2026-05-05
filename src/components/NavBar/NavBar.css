@@ -158,3 +158,19 @@
     padding-left: var(--spacing-md);
   }
 }
+
+@media (max-width: 640px) {
+  .navbar {
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+
+  .navbar-right {
+    gap: var(--spacing-md);
+    margin-left: 0;
+  }
+
+  .user-menu {
+    padding-left: var(--spacing-sm);
+    border-left: none;
+  }
+}

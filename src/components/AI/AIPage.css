@@ -1612,3 +1612,27 @@
     margin-bottom: 0.25rem;
   }
 }
+
+@media (max-width: 1024px) {
+  .ai-page {
+    max-width: 100%;
+  }
+
+  .ai-input-container {
+    padding: var(--spacing-md);
+  }
+
+  .ai-plan-item {
+    padding: var(--spacing-md);
+  }
+}
+
+@media (max-width: 600px) {
+  .ai-input {
+    font-size: 0.95rem;
+  }
+
+  .ai-plan-activity {
+    font-size: 0.9rem;
+  }
+}
